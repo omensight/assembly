@@ -1,0 +1,13 @@
+{
+    "failureCannotConnectToTheServer": "Cannot connect to the server",
+    "authenticationFailure": "Authentication failure",
+    "logInWithGoogle": "Log in with Google",
+    "noPreferredTimeSelected": "No preferred time selected",
+    "optionalTag": "(Optional)",
+    "errorRequiredField": "This field is required",
+    "invalidPhoneNumber": "Invalid phone number",
+    "errorMinimumLength": "Minimum length is {}",
+    "failureInvalidEmail": "Invalid email",
+    "failureValueExceedsTheMaxValue": "This value cannot exceed the maximum value of {}",
+    "errorAtLeastOneNonZeroField": "At least one of these fields must be non-zero"
+}
