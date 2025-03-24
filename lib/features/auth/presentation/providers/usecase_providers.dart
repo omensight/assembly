@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/usecases/sigin_using_email_and_password_usecase.dart';
 import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:assembly/features/auth/domain/usecases/login_into_the_server_usecase.dart';
@@ -22,4 +23,9 @@ LoginIntoTheServerUsecase loginIntoTheServerUsecase(Ref ref) {
 @riverpod
 SignUpUsingEmailAndPasswordUsecase signUpUsingEmailAndPasswordUsecase(Ref ref) {
   return SignUpUsingEmailAndPasswordUsecase();
+}
+
+@riverpod
+SignInUsingEmailAndPasswordUsecase signInUsingEmailAndPasswordUsecase(Ref ref) {
+  return SignInUsingEmailAndPasswordUsecase();
 }

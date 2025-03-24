@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/usecases/sigin_using_email_and_password_usecase.dart';
 import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,22 +70,33 @@ class LoginController extends _$LoginController {
     required String emailAddress,
     required String password,
   }) async {
-    state = (await ref
-            .watch(signUpUsingEmailAndPasswordUsecaseProvider)
+    (await ref
+            .read(signInUsingEmailAndPasswordUsecaseProvider)
             .build(
-              SignUpUsingEmailAndPasswordParams(
+              SignInUsingEmailAndPasswordParams(
                 emailAddress: emailAddress,
                 password: password,
               ),
             )
             .run())
-        .fold(
-          (l) => AsyncError(switch (l) {
-            CannotSignUp() => LocaleKeys.cannotRegister.tr(),
-            EmailAlreadyInUse() => LocaleKeys.emailAlreadyInUse.tr(),
-            WeakPassword() => LocaleKeys.weakPassword.tr(),
-          }, StackTrace.current),
-          (r) => AsyncData(r.user),
-        );
+        .fold((l) async {
+          state = (await ref
+                  .read(signUpUsingEmailAndPasswordUsecaseProvider)
+                  .build(
+                    SignUpUsingEmailAndPasswordParams(
+                      emailAddress: emailAddress,
+                      password: password,
+                    ),
+                  )
+                  .run())
+              .fold(
+                (l) => AsyncError(switch (l) {
+                  CannotSignUp() => LocaleKeys.cannotRegister.tr(),
+                  EmailAlreadyInUse() => LocaleKeys.wrongPassword.tr(),
+                  WeakPassword() => LocaleKeys.weakPassword.tr(),
+                }, StackTrace.current),
+                (r) => AsyncData(r.user),
+              );
+        }, (_) {});
   }
 }

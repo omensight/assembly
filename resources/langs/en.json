@@ -24,6 +24,7 @@
     "cannotRegister": "Cannot register",
     "emailAlreadyInUse": "Email already in use",
     "weakPassword": "Weak password",
+    "wrongPassword": "Wrong password",
     "ifYouDoNotHaveAnAccountWithUsWeWillCreateOneForYou": "If you do not have an account with us, we will create one for you",
     "errorInvalidPassword":"Password must be at least 8 characters long, include at least one letter,one digit and one special character."
 }
