@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/models/authentication_state.dart';
 import 'package:assembly/features/auth/domain/usecases/sigin_using_email_and_password_usecase.dart';
 import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -40,6 +41,21 @@ FutureOr<ServerToken?> serverToken(Ref ref) async {
 }
 
 @riverpod
+AuthenticationState authenticationState(Ref ref) {
+  return ref
+      .watch(serverTokenProvider)
+      .when(
+        data:
+            (data) =>
+                data != null
+                    ? AuthenticationState.authenticated
+                    : AuthenticationState.unauthenticated,
+        error: (error, stackTrace) => AuthenticationState.unauthenticated,
+        loading: () => AuthenticationState.unauthenticated,
+      );
+}
+
+@riverpod
 class LoginController extends _$LoginController {
   @override
   FutureOr<User?> build() {
@@ -53,17 +69,13 @@ class LoginController extends _$LoginController {
   }
 
   Future<void> loginWithGoogle() async {
-    state = (await ref
-            .watch(loginWithGoogleUsecaseProvider)
-            .build(NoParams())
-            .run())
-        .fold(
-          (l) => AsyncError(
+    (await ref.watch(loginWithGoogleUsecaseProvider).build(NoParams()).run())
+        .fold((l) {
+          state = AsyncError(
             LocaleKeys.authenticationFailure.tr(),
             StackTrace.current,
-          ),
-          (r) => AsyncData(r.user),
-        );
+          );
+        }, (_) {});
   }
 
   Future<void> registerUsingEmailAndPassword({
@@ -80,7 +92,7 @@ class LoginController extends _$LoginController {
             )
             .run())
         .fold((l) async {
-          state = (await ref
+          (await ref
                   .read(signUpUsingEmailAndPasswordUsecaseProvider)
                   .build(
                     SignUpUsingEmailAndPasswordParams(
@@ -89,14 +101,13 @@ class LoginController extends _$LoginController {
                     ),
                   )
                   .run())
-              .fold(
-                (l) => AsyncError(switch (l) {
+              .fold((l) {
+                state = AsyncError(switch (l) {
                   CannotSignUp() => LocaleKeys.cannotRegister.tr(),
                   EmailAlreadyInUse() => LocaleKeys.wrongPassword.tr(),
                   WeakPassword() => LocaleKeys.weakPassword.tr(),
-                }, StackTrace.current),
-                (r) => AsyncData(r.user),
-              );
+                }, StackTrace.current);
+              }, (r) => AsyncData(r.user));
         }, (_) {});
   }
 }

@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/models/authentication_state.dart';
 import 'package:assembly/features/auth/presentation/controllers/login_controller.dart';
 import 'package:assembly/features/auth/routes.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,11 @@ GoRouter router(Ref ref) {
   return GoRouter(
     routes: [...$appRoutes, ...authRoutes],
     redirect: (context, state) {
-      final serverToken = ref
-          .watch(serverTokenProvider)
-          .when(
-            data: (data) => data,
-            error: (error, stackTrace) => null,
-            loading: () => null,
-          );
-      return serverToken == null ? '/login' : null;
+      final authenticationState = ref.watch(authenticationStateProvider);
+
+      return authenticationState == AuthenticationState.unauthenticated
+          ? LoginRoute().location
+          : '/';
     },
   );
 }
