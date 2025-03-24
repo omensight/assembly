@@ -6,7 +6,7 @@ class LoginTextValidator {
     String? error;
     final regex = RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$');
     if (value == null || !regex.hasMatch(value)) {
-      throw Exception('Not implemented');
+      error = LocaleKeys.errorInvalidPassword.tr();
     }
     return error;
   }

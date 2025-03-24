@@ -34,8 +34,17 @@ class StandardButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (buttonState == StandardButtonState.loading) ...const [
-            SizedBox(width: 18, height: 18, child: CircularProgressIndicator()),
+          if (buttonState == StandardButtonState.loading) ...[
+            SizedBox(
+              width: 18,
+              height: 18,
+              child: CircularProgressIndicator(
+                color:
+                    isForegroundColored
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.primary,
+              ),
+            ),
             StandardSpace.horizontal(),
           ],
           Text(text),

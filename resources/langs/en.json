@@ -1,7 +1,7 @@
 {
     "failureCannotConnectToTheServer": "Cannot connect to the server",
     "authenticationFailure": "Authentication failure",
-    "logInWithGoogle": "Log in with Google",
+    "signInGoogle": "Sign in with Google",
     "noPreferredTimeSelected": "No preferred time selected",
     "optionalTag": "(Optional)",
     "errorRequiredField": "This field is required",
@@ -9,5 +9,21 @@
     "errorMinimumLength": "Minimum length is {}",
     "failureInvalidEmail": "Invalid email",
     "failureValueExceedsTheMaxValue": "This value cannot exceed the maximum value of {}",
-    "errorAtLeastOneNonZeroField": "At least one of these fields must be non-zero"
+    "errorAtLeastOneNonZeroField": "At least one of these fields must be non-zero",
+    "name": "Name",
+    "lastName": "Last name",
+    "password": "Password",
+    "email": "Email",
+    "haveAnAccount": "Have an account?",
+    "needAnAccount": "Need an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "welcomeBack": "Welcome back!",
+    "pleaseSignInToContinue": "Please sign in to continue",
+    "enterYourEmailAndPassword": "Enter your email and password",
+    "cannotRegister": "Cannot register",
+    "emailAlreadyInUse": "Email already in use",
+    "weakPassword": "Weak password",
+    "ifYouDoNotHaveAnAccountWithUsWeWillCreateOneForYou": "If you do not have an account with us, we will create one for you",
+    "errorInvalidPassword":"Password must be at least 8 characters long, include at least one letter,one digit and one special character."
 }

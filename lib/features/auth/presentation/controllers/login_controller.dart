@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -60,6 +61,29 @@ class LoginController extends _$LoginController {
             LocaleKeys.authenticationFailure.tr(),
             StackTrace.current,
           ),
+          (r) => AsyncData(r.user),
+        );
+  }
+
+  Future<void> registerUsingEmailAndPassword({
+    required String emailAddress,
+    required String password,
+  }) async {
+    state = (await ref
+            .watch(signUpUsingEmailAndPasswordUsecaseProvider)
+            .build(
+              SignUpUsingEmailAndPasswordParams(
+                emailAddress: emailAddress,
+                password: password,
+              ),
+            )
+            .run())
+        .fold(
+          (l) => AsyncError(switch (l) {
+            CannotSignUp() => LocaleKeys.cannotRegister.tr(),
+            EmailAlreadyInUse() => LocaleKeys.emailAlreadyInUse.tr(),
+            WeakPassword() => LocaleKeys.weakPassword.tr(),
+          }, StackTrace.current),
           (r) => AsyncData(r.user),
         );
   }
