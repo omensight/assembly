@@ -1,6 +1,7 @@
 import 'package:assembly/core/constants.dart';
 import 'package:assembly/core/text_validators/login_text_validator.dart';
 import 'package:assembly/core/widgets/standard_button.dart';
+import 'package:assembly/core/widgets/standard_form_field_password.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/core/widgets/standard_text_form_field.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -70,7 +71,7 @@ class LoginPage extends HookConsumerWidget {
                   onChanged: (value) {},
                 ),
                 const StandardSpace.vertical(),
-                StandardTextFormField(
+                StandardFormFieldPassword(
                   controller: passwordController,
                   label: LocaleKeys.password.tr(),
                   validator:
