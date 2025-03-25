@@ -18,38 +18,25 @@ Stream<User?> authStateChanges(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-FutureOr<ServerToken?> serverToken(Ref ref) async {
-  final loggedInUser = ref
-      .watch(loginControllerProvider)
-      .when(
-        data: (data) => data,
-        error: (error, stackTrace) => null,
-        loading: () => null,
-      );
-  ServerToken? serverToken;
-  if (loggedInUser != null) {
-    final idToken = await loggedInUser.getIdToken();
-    if (idToken != null) {
-      serverToken = (await ref
-              .read(loginIntoTheServerUsecaseProvider)
-              .build(LoginIntoTheServerParams(firebaseIdToken: idToken))
-              .run())
-          .fold((l) => null, (r) => serverToken = r);
-    }
-  }
-  return serverToken;
+Stream<ServerToken?> serverToken(Ref ref) {
+  return ref.watch(getLocalTokenServerUsecaseProvider)(NoParams()).fold(
+    (l) => Stream.value(null),
+    (r) {
+      return r;
+    },
+  );
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 AuthenticationState authenticationState(Ref ref) {
   return ref
       .watch(serverTokenProvider)
       .when(
-        data:
-            (data) =>
-                data != null
-                    ? AuthenticationState.authenticated
-                    : AuthenticationState.unauthenticated,
+        data: (data) {
+          return data != null
+              ? AuthenticationState.authenticated
+              : AuthenticationState.unauthenticated;
+        },
         error: (error, stackTrace) => AuthenticationState.unauthenticated,
         loading: () => AuthenticationState.unauthenticated,
       );
@@ -76,6 +63,23 @@ class LoginController extends _$LoginController {
             StackTrace.current,
           );
         }, (_) {});
+  }
+
+  Future<void> refreshTokenServer() async {
+    final firebaseToken =
+        await ref.read(authStateChangesProvider).valueOrNull?.getIdToken();
+    if (firebaseToken != null) {
+      (await ref
+              .read(loginIntoTheServerUsecaseProvider)
+              .build(LoginIntoTheServerParams(firebaseIdToken: firebaseToken))
+              .run())
+          .fold((l) {
+            state = AsyncError(
+              LocaleKeys.authenticationFailure.tr(),
+              StackTrace.current,
+            );
+          }, (_) {});
+    }
   }
 
   Future<void> registerUsingEmailAndPassword({

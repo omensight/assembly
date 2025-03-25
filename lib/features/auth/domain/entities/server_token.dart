@@ -7,10 +7,11 @@ const uniqueId = 1;
 
 @JsonSerializable()
 class ServerToken extends Insertable<ServerToken> {
+  final int id;
   final DateTime expiry;
   final String token;
 
-  ServerToken({required this.expiry, required this.token});
+  ServerToken({this.id = uniqueId, required this.expiry, required this.token});
 
   factory ServerToken.fromJson(Map<String, dynamic> json) =>
       _$ServerTokenFromJson(json);
@@ -32,4 +33,6 @@ class ServerTokens extends Table {
   IntColumn get id => integer()();
   DateTimeColumn get expiry => dateTime()();
   TextColumn get token => text()();
+  @override
+  Set<Column<Object>>? get primaryKey => {id};
 }

@@ -15,12 +15,13 @@ class LoginIntoTheServerUsecase
 
   @override
   TaskEither<Failure, ServerToken> build(LoginIntoTheServerParams params) {
-    return TaskEither.tryCatch(
-      () => _serverTokenRepository.getServerToken(
+    return TaskEither.tryCatch(() async {
+      final token = await _serverTokenRepository.getServerToken(
         firebaseIdToken: params.firebaseIdToken,
-      ),
-      (error, stackTrace) => InvalidCredentials(),
-    );
+      );
+      await _serverTokenRepository.saveServerToken(token);
+      return token;
+    }, (error, stackTrace) => InvalidCredentials());
   }
 }
 

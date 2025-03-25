@@ -9,6 +9,7 @@ part 'repository_providers.g.dart';
 @riverpod
 ServerTokenRepository serverTokenRepository(Ref ref) {
   return ServerTokenRepositoryImpl(
-    tokenServerDataSource: ref.watch(serverTokenDataSourceProvider),
+    tokenServerRemoteDataSource: ref.watch(serverTokenRemoteDataSourceProvider),
+    serverTokenLocalDataSource: ref.watch(serverTokenLocalDataSourceProvider),
   );
 }

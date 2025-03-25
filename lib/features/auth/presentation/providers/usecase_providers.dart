@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/usecases/get_local_token_server_usecase.dart';
 import 'package:assembly/features/auth/domain/usecases/sigin_using_email_and_password_usecase.dart';
 import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,4 +29,11 @@ SignUpUsingEmailAndPasswordUsecase signUpUsingEmailAndPasswordUsecase(Ref ref) {
 @riverpod
 SignInUsingEmailAndPasswordUsecase signInUsingEmailAndPasswordUsecase(Ref ref) {
   return SignInUsingEmailAndPasswordUsecase();
+}
+
+@riverpod
+GetLocalTokenServerUsecase getLocalTokenServerUsecase(Ref ref) {
+  return GetLocalTokenServerUsecase(
+    serverTokenRepository: ref.watch(serverTokenRepositoryProvider),
+  );
 }
