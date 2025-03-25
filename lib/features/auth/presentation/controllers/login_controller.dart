@@ -29,17 +29,21 @@ Stream<ServerToken?> serverToken(Ref ref) {
 
 @Riverpod(keepAlive: true)
 AuthenticationState authenticationState(Ref ref) {
-  return ref
-      .watch(serverTokenProvider)
-      .when(
-        data: (data) {
-          return data != null
-              ? AuthenticationState.authenticated
-              : AuthenticationState.unauthenticated;
-        },
-        error: (error, stackTrace) => AuthenticationState.unauthenticated,
-        loading: () => AuthenticationState.unauthenticated,
-      );
+  final user = ref.watch(authStateChangesProvider).valueOrNull;
+  final serverToken = ref.watch(serverTokenProvider).valueOrNull;
+  AuthenticationState state = AuthenticationState.loading;
+  if (serverToken == null && user != null) {
+    ref.read(loginControllerProvider.notifier).refreshTokenServer();
+    state = AuthenticationState.loading;
+  }
+  if (serverToken != null && user != null) {
+    state = AuthenticationState.authenticated;
+  }
+
+  if (serverToken == null && user == null) {
+    state = AuthenticationState.unauthenticated;
+  }
+  return state;
 }
 
 @riverpod
@@ -62,7 +66,7 @@ class LoginController extends _$LoginController {
             LocaleKeys.authenticationFailure.tr(),
             StackTrace.current,
           );
-        }, (_) {});
+        }, (e) {});
   }
 
   Future<void> refreshTokenServer() async {
