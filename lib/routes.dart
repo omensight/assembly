@@ -1,3 +1,4 @@
+import 'package:assembly/features/assemblies/routes.dart';
 import 'package:assembly/features/auth/domain/models/authentication_state.dart';
 import 'package:assembly/features/auth/presentation/controllers/login_controller.dart';
 import 'package:assembly/features/auth/presentation/pages/splash_screen/splash_screen.dart';
@@ -11,14 +12,14 @@ part 'routes.g.dart';
 @riverpod
 GoRouter router(Ref ref) {
   return GoRouter(
-    routes: [...$appRoutes, ...authRoutes],
-    initialLocation: SplashRoute().location,
+    routes: [...$appRoutes, ...authRoutes, ...assemblyRoutes],
+    initialLocation: UserAssembliesRoute().location,
     redirect: (context, state) {
       final authenticationState = ref.watch(authenticationStateProvider);
 
       return authenticationState == AuthenticationState.unauthenticated
           ? LoginRoute().location
-          : '/';
+          : UserAssembliesRoute().location;
     },
   );
 }
@@ -28,13 +29,5 @@ class SplashRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return SplashScreen();
-  }
-}
-
-@TypedGoRoute<HomeRoute>(path: '/')
-class HomeRoute extends GoRouteData {
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return Scaffold(body: Center(child: Text('Home')));
   }
 }

@@ -1,0 +1,14 @@
+.
+./data
+./data/data_sources
+./data/repositories
+./presentation
+./presentation/pages
+./presentation/pages/splash_screen
+./presentation/controllers
+./presentation/providers
+./domain
+./domain/repositories
+./domain/entities
+./domain/models
+./domain/usecases
