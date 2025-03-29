@@ -1,3 +1,7 @@
+import 'package:assembly/core/widgets/standar_paddings.dart';
+import 'package:assembly/core/widgets/standard_actions_notifier.dart';
+import 'package:assembly/core/widgets/standard_adaptable_width_container.dart';
+import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/user_assemblies_list_controller.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
@@ -13,16 +17,45 @@ class UserAssembliesPage extends ConsumerWidget {
     final userAssembliesAsync = ref.watch(userAssembliesListControllerProvider);
     return Scaffold(
       appBar: AppBar(title: Text(LocaleKeys.assemblies.tr())),
-      body: userAssembliesAsync.when(
-        data: (assemblies) {
-          return ListView.separated(
-            separatorBuilder: (context, index) => StandardSpace.vertical(),
-            itemBuilder: (context, index) => Row(),
-            itemCount: assemblies.length,
-          );
-        },
-        error: (error, stackTrace) => Center(child: Text(error as String)),
-        loading: () => Center(child: CircularProgressIndicator()),
+      body: Padding(
+        padding: standardHorizontalPadding,
+        child: SingleChildScrollView(
+          child: StandardAdaptableWidthContainer(
+            child: StandardActionsNotifier(
+              child: userAssembliesAsync.when(
+                data: (assemblies) {
+                  return ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder:
+                        (context, index) => StandardSpace.vertical(),
+                    itemBuilder: (context, index) {
+                      final currentItem = assemblies[index];
+                      return StandardContainer(
+                        padding: EdgeInsets.all(8),
+                        onTap: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              currentItem.name,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(currentItem.address),
+                          ],
+                        ),
+                      );
+                    },
+                    itemCount: assemblies.length,
+                  );
+                },
+                error:
+                    (error, stackTrace) => Center(child: Text(error as String)),
+                loading: () => Center(child: CircularProgressIndicator()),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

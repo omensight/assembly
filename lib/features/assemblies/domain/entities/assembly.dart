@@ -7,7 +7,7 @@ part 'assembly.g.dart';
 @UseRowClass(Assembly)
 class Assemblies extends Table {
   TextColumn get id => text()();
-  IntColumn get founder => integer().references(Users, #id)();
+  IntColumn get userFounderId => integer().references(Users, #id)();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
   TextColumn get name => text()();
@@ -22,8 +22,8 @@ class Assembly extends Insertable<Assembly> {
   @JsonKey(name: 'id')
   final String id;
 
-  @JsonKey(name: 'founder')
-  final int founder;
+  @JsonKey(name: 'user_founder_id')
+  final int userFounderId;
 
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -39,7 +39,7 @@ class Assembly extends Insertable<Assembly> {
 
   Assembly({
     required this.id,
-    required this.founder,
+    required this.userFounderId,
     required this.createdAt,
     required this.updatedAt,
     required this.name,
@@ -55,7 +55,7 @@ class Assembly extends Insertable<Assembly> {
   Map<String, Expression<Object>> toColumns(bool nullToAbsent) {
     return AssembliesCompanion(
       id: Value(id),
-      founder: Value(founder),
+      userFounderId: Value(userFounderId),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
       name: Value(name),

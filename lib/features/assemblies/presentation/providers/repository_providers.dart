@@ -10,5 +10,6 @@ part 'repository_providers.g.dart';
 AssemblyRepository assemblyRepository(Ref ref) {
   return AssemblyRepositoryImpl(
     assemblyLocalDataSource: ref.watch(assemblyLocalDataSourceProvider),
+    assemblyRemoteDataSource: ref.watch(assemblyRemoteDataSourceProvider),
   );
 }

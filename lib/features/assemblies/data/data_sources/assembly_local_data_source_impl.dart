@@ -13,10 +13,13 @@ class AssemblyLocalDataSourceImpl extends DatabaseAccessor<AssemblyDatabase>
 
   @override
   Stream<List<Assembly>> getUserAssembliesStream(int userId) async* {
-    final assembliesIds = (await (select(assemblyMembers)
-          ..where((tbl) => tbl.userId.equals(userId))).get())
-        .map((e) => e.assemblyId);
-    yield* (select(assemblies)
-      ..where((tbl) => tbl.id.isIn(assembliesIds))).watch();
+    yield* (select(assemblies)).watch();
+  }
+
+  @override
+  Future<void> cacheAssemblies(List<Assembly> newAssemblies) async {
+    await batch((batch) {
+      batch.insertAllOnConflictUpdate(assemblies, newAssemblies);
+    });
   }
 }
