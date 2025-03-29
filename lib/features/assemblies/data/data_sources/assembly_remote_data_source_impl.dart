@@ -15,5 +15,7 @@ abstract class AssemblyRemoteDataSourceImpl
 
   @GET('/assemblies/')
   @override
-  Future<List<Assembly>> getUserAssemblies();
+  Future<List<Assembly>> getUserAssemblies(
+    @Query('updated_after') DateTime? updatedAfter,
+  );
 }

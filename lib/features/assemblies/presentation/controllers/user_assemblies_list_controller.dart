@@ -1,3 +1,4 @@
+import 'package:assembly/core/usecase/params.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list_stream_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/providers/usecase_providers.dart';
@@ -9,6 +10,7 @@ part 'user_assemblies_list_controller.g.dart';
 
 @riverpod
 Stream<List<Assembly>> userAssembliesListController(Ref ref) {
+  ref.read(fetchUserAssembliesUsecaseProvider).build(NoParams()).run();
   return ref
       .watch(getAssembliesListStreamUsecaseProvider)
       .call(GetAssembliesListStreamParams(userId: 1))
