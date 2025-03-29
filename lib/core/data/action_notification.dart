@@ -23,8 +23,6 @@ enum ActionNotificationMethod {
 }
 
 enum ActionNotificationEntity {
-  @JsonValue('routine')
-  routine,
-  @JsonValue('task')
-  task,
+  @JsonValue('assembly')
+  assembly,
 }
