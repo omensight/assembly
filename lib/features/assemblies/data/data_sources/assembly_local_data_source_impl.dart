@@ -22,4 +22,10 @@ class AssemblyLocalDataSourceImpl extends DatabaseAccessor<AssemblyDatabase>
       batch.insertAllOnConflictUpdate(assemblies, newAssemblies);
     });
   }
+
+  @override
+  Stream<Assembly?> getAssemblyStream(String assemblyId) {
+    return (select(assemblies)
+      ..where((tbl) => tbl.id.equals(assemblyId))).watchSingleOrNull();
+  }
 }

@@ -7,4 +7,6 @@ abstract interface class AssemblyRepository {
   Future<void> fetchUserAssemblies();
 
   Future<Assembly> createAssembly(AssemblyCreateRequest assemblyCreateRequest);
+
+  Stream<Assembly?> getAssemblyStream(String assemblyId);
 }

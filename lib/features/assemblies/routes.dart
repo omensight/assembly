@@ -1,3 +1,4 @@
+import 'package:assembly/features/assemblies/presentation/pages/assembly_detail_page/assembly_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/user_assemblies_page/user_assemblies_page.dart';
 import 'package:flutter/widgets.dart';
@@ -20,5 +21,16 @@ class CreateAssemblyRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return CreateAssemblyPage();
+  }
+}
+
+@TypedGoRoute<AssemblyDetailRoute>(path: '/assembly')
+class AssemblyDetailRoute extends GoRouteData {
+  final String assemblyId;
+
+  AssemblyDetailRoute({required this.assemblyId});
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AssemblyDetailPage(assemblyId: assemblyId);
   }
 }

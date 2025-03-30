@@ -45,7 +45,11 @@ class UserAssembliesPage extends ConsumerWidget {
                       final currentItem = assemblies[index];
                       return StandardContainer(
                         padding: EdgeInsets.all(8),
-                        onTap: () {},
+                        onTap: () {
+                          AssemblyDetailRoute(
+                            assemblyId: currentItem.id,
+                          ).push(context);
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

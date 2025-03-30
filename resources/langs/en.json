@@ -32,5 +32,6 @@
     "createAssembly": "Create Assembly",
     "assemblyName": "Assembly name",
     "address":"Address",
-    "failureCreatingTheAssembly": "There was a problem creating the assembly"
+    "failureCreatingTheAssembly": "There was a problem creating the assembly",
+    "failureLoadingTheAssembly":"There was a problem loading the assembly information"
 }

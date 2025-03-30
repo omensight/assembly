@@ -7,11 +7,11 @@ import 'package:drift/drift.dart';
 abstract interface class AssemblyLocalDataSource {
   Stream<List<Assembly>> getUserAssembliesStream(int userId);
   Future<void> cacheAssemblies(List<Assembly> newAssemblies);
+  Stream<Assembly?> getAssemblyStream(String assemblyId);
 }
 
 abstract interface class AssemblyRemoteDataSource {
   Future<List<Assembly>> getUserAssemblies(DateTime? updatedAfter);
-
   Future<Assembly> postAssembly(AssemblyCreateRequest assemblyCreateRequest);
 }
 
@@ -56,5 +56,10 @@ class AssemblyRepositoryImpl implements AssemblyRepository {
   @override
   Future<Assembly> createAssembly(AssemblyCreateRequest assemblyCreateRequest) {
     return _assemblyRemoteDataSource.postAssembly(assemblyCreateRequest);
+  }
+
+  @override
+  Stream<Assembly?> getAssemblyStream(String assemblyId) {
+    return _assemblyLocalDataSource.getAssemblyStream(assemblyId);
   }
 }
