@@ -1,5 +1,6 @@
 import 'package:assembly/core/data/datasources/updated_entities_record_local_data_source.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
+import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assembly_repository.dart';
 import 'package:drift/drift.dart';
 
@@ -10,6 +11,8 @@ abstract interface class AssemblyLocalDataSource {
 
 abstract interface class AssemblyRemoteDataSource {
   Future<List<Assembly>> getUserAssemblies(DateTime? updatedAfter);
+
+  Future<Assembly> postAssembly(AssemblyCreateRequest assemblyCreateRequest);
 }
 
 class AssemblyRepositoryImpl implements AssemblyRepository {
@@ -48,5 +51,10 @@ class AssemblyRepositoryImpl implements AssemblyRepository {
     await _assemblyLocalDataSource.cacheAssemblies(assemblies);
 
     _updatedEntitiesRecordLocalDataSource.updateRecord(updatedRecord);
+  }
+
+  @override
+  Future<Assembly> createAssembly(AssemblyCreateRequest assemblyCreateRequest) {
+    return _assemblyRemoteDataSource.postAssembly(assemblyCreateRequest);
   }
 }

@@ -28,5 +28,9 @@
     "ifYouDoNotHaveAnAccountWithUsWeWillCreateOneForYou": "If you do not have an account with us, we will create one for you",
     "errorInvalidPassword":"Password must be at least 8 characters long, include at least one letter,one digit and one special character.",
     "failureLoadingUserAssembliesList": "There was a problem loading the user assemblies",
-    "assemblies": "Assemblies"
+    "assemblies": "Assemblies",
+    "createAssembly": "Create Assembly",
+    "assemblyName": "Assembly name",
+    "address":"Address",
+    "failureCreatingTheAssembly": "There was a problem creating the assembly"
 }

@@ -2,8 +2,10 @@ import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_actions_notifier.dart';
 import 'package:assembly/core/widgets/standard_adaptable_width_container.dart';
 import 'package:assembly/core/widgets/standard_container.dart';
+import 'package:assembly/core/widgets/standard_icon_button.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/user_assemblies_list_controller.dart';
+import 'package:assembly/features/assemblies/routes.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,17 @@ class UserAssembliesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userAssembliesAsync = ref.watch(userAssembliesListControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(LocaleKeys.assemblies.tr())),
+      appBar: AppBar(
+        title: Text(LocaleKeys.assemblies.tr()),
+        actions: [
+          StandardIconButton(
+            icon: Icon(Icons.add_box_rounded),
+            onPressed: () {
+              CreateAssemblyRoute().push(context);
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: standardHorizontalPadding,
         child: SingleChildScrollView(

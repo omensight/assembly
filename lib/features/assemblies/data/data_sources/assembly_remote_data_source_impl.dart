@@ -1,5 +1,6 @@
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
+import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 part 'assembly_remote_data_source_impl.g.dart';
@@ -17,5 +18,11 @@ abstract class AssemblyRemoteDataSourceImpl
   @override
   Future<List<Assembly>> getUserAssemblies(
     @Query('updated_after') DateTime? updatedAfter,
+  );
+
+  @POST('/assemblies/')
+  @override
+  Future<Assembly> postAssembly(
+    @Body() AssemblyCreateRequest assemblyCreateRequest,
   );
 }

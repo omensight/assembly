@@ -19,7 +19,7 @@ GoRouter router(Ref ref) {
 
       return authenticationState == AuthenticationState.unauthenticated
           ? LoginRoute().location
-          : UserAssembliesRoute().location;
+          : null;
     },
   );
 }

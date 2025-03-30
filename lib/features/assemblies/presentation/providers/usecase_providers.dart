@@ -1,3 +1,4 @@
+import 'package:assembly/features/assemblies/domain/usecases/create_assembly_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/fetch_user_assemblies_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list_stream_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/providers/repository_providers.dart';
@@ -16,6 +17,13 @@ GetAssembliesListStreamUsecase getAssembliesListStreamUsecase(Ref ref) {
 @riverpod
 FetchUserAssembliesUsecase fetchUserAssembliesUsecase(Ref ref) {
   return FetchUserAssembliesUsecase(
+    assemblyRepository: ref.watch(assemblyRepositoryProvider),
+  );
+}
+
+@riverpod
+CreateAssemblyUsecase createAssemblyUsecase(Ref ref) {
+  return CreateAssemblyUsecase(
     assemblyRepository: ref.watch(assemblyRepositoryProvider),
   );
 }
