@@ -1,6 +1,7 @@
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/fetch_user_assemblies_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list_stream_usecase.dart';
+import 'package:assembly/features/assemblies/domain/usecases/get_assembly_join_code_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_stream_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/providers/repository_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +33,13 @@ CreateAssemblyUsecase createAssemblyUsecase(Ref ref) {
 @riverpod
 GetAssemblyStreamUsecase getAssemblyStreamUsecase(Ref ref) {
   return GetAssemblyStreamUsecase(
+    assemblyRepository: ref.watch(assemblyRepositoryProvider),
+  );
+}
+
+@riverpod
+GetAssemblyJoinCodeUsecase getAssemblyJoinCodeUsecase(Ref ref) {
+  return GetAssemblyJoinCodeUsecase(
     assemblyRepository: ref.watch(assemblyRepositoryProvider),
   );
 }

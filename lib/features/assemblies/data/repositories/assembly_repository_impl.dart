@@ -1,5 +1,6 @@
 import 'package:assembly/core/data/datasources/updated_entities_record_local_data_source.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assembly_repository.dart';
 import 'package:drift/drift.dart';
@@ -13,6 +14,7 @@ abstract interface class AssemblyLocalDataSource {
 abstract interface class AssemblyRemoteDataSource {
   Future<List<Assembly>> getUserAssemblies(DateTime? updatedAfter);
   Future<Assembly> postAssembly(AssemblyCreateRequest assemblyCreateRequest);
+  Future<AssemblyJoinCode> getAssemblyJoinCode(String assemblyId, bool refresh);
 }
 
 class AssemblyRepositoryImpl implements AssemblyRepository {
@@ -62,4 +64,10 @@ class AssemblyRepositoryImpl implements AssemblyRepository {
   Stream<Assembly?> getAssemblyStream(String assemblyId) {
     return _assemblyLocalDataSource.getAssemblyStream(assemblyId);
   }
+
+  @override
+  Future<AssemblyJoinCode> getAssemblyJoinCode(
+    String assemblyId,
+    bool refresh,
+  ) => _assemblyRemoteDataSource.getAssemblyJoinCode(assemblyId, refresh);
 }

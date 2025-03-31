@@ -1,5 +1,6 @@
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -24,5 +25,12 @@ abstract class AssemblyRemoteDataSourceImpl
   @override
   Future<Assembly> postAssembly(
     @Body() AssemblyCreateRequest assemblyCreateRequest,
+  );
+
+  @GET('/assemblies/{assemblyId}/join-code/')
+  @override
+  Future<AssemblyJoinCode> getAssemblyJoinCode(
+    @Path('assemblyId') String assemblyId,
+    @Query('refresh') bool refresh,
   );
 }

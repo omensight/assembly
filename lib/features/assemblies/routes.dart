@@ -1,4 +1,5 @@
 import 'package:assembly/features/assemblies/presentation/pages/assembly_detail_page/assembly_detail_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assembly_joining_information_page/assembly_joining_information_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/user_assemblies_page/user_assemblies_page.dart';
 import 'package:flutter/widgets.dart';
@@ -32,5 +33,18 @@ class AssemblyDetailRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return AssemblyDetailPage(assemblyId: assemblyId);
+  }
+}
+
+@TypedGoRoute<AssemblyJoiningInformationRoute>(
+  path: '/assembly-joining-information',
+)
+class AssemblyJoiningInformationRoute extends GoRouteData {
+  final String assemblyId;
+
+  AssemblyJoiningInformationRoute({required this.assemblyId});
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AssemblyJoiningInformationPage(assemblyId: assemblyId);
   }
 }
