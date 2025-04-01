@@ -12,4 +12,6 @@ abstract interface class AssemblyRepository {
   Stream<Assembly?> getAssemblyStream(String assemblyId);
 
   Future<AssemblyJoinCode> getAssemblyJoinCode(String assemblyId, bool refresh);
+
+  Future<Assembly> getAssemblyByJoinCode(String joinCode);
 }

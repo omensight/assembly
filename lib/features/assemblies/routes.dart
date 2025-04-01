@@ -1,6 +1,7 @@
 import 'package:assembly/features/assemblies/presentation/pages/assembly_detail_page/assembly_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assembly_joining_information_page/assembly_joining_information_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/scan_assembly_join_code_page/scan_assembly_join_code_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/user_assemblies_page/user_assemblies_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -46,5 +47,13 @@ class AssemblyJoiningInformationRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return AssemblyJoiningInformationPage(assemblyId: assemblyId);
+  }
+}
+
+@TypedGoRoute<ScanAssemblyJoinCodeRoute>(path: '/scan-assembly-join-code')
+class ScanAssemblyJoinCodeRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ScanAssemblyJoinCodePage();
   }
 }

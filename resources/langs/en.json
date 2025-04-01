@@ -37,5 +37,9 @@
     "failureLoadingTheAssemblyJoinCode": "Cannot load the assemblyJoinCode",
     "qrCode":"QR code",
     "assembly": "Assembly",
-    "joinNotice": "This Assembly QR code is private, if you share this code with someone, they will be able to scan it with their Assembly Camera to join it."
+    "joinNotice": "This Assembly QR code is private, if you share this code with someone, they will be able to scan it with their Assembly Camera to join it.",
+    "scanAnAssemblyQrCodeToRequestToJoin": "Scan the Assembly QR code of the Assembly you want to join",
+    "joinAnAssembly":"Join an assembly",
+    "requestAccess":"Request access"
+    
 }

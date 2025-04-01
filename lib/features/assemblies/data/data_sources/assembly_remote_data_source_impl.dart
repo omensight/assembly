@@ -33,4 +33,8 @@ abstract class AssemblyRemoteDataSourceImpl
     @Path('assemblyId') String assemblyId,
     @Query('refresh') bool refresh,
   );
+
+  @GET('/assemblies/find-by-join-code/')
+  @override
+  Future<Assembly> getAssemblyByJoinCode(@Query('join_code') String joinCode);
 }

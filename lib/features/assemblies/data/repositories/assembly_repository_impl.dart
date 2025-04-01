@@ -15,6 +15,7 @@ abstract interface class AssemblyRemoteDataSource {
   Future<List<Assembly>> getUserAssemblies(DateTime? updatedAfter);
   Future<Assembly> postAssembly(AssemblyCreateRequest assemblyCreateRequest);
   Future<AssemblyJoinCode> getAssemblyJoinCode(String assemblyId, bool refresh);
+  Future<Assembly> getAssemblyByJoinCode(String joinCode);
 }
 
 class AssemblyRepositoryImpl implements AssemblyRepository {
@@ -70,4 +71,8 @@ class AssemblyRepositoryImpl implements AssemblyRepository {
     String assemblyId,
     bool refresh,
   ) => _assemblyRemoteDataSource.getAssemblyJoinCode(assemblyId, refresh);
+
+  @override
+  Future<Assembly> getAssemblyByJoinCode(String joinCode) =>
+      _assemblyRemoteDataSource.getAssemblyByJoinCode(joinCode);
 }
