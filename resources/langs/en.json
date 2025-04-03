@@ -40,6 +40,7 @@
     "joinNotice": "This Assembly QR code is private, if you share this code with someone, they will be able to scan it with their Assembly Camera to join it.",
     "scanAnAssemblyQrCodeToRequestToJoin": "Scan the Assembly QR code of the Assembly you want to join",
     "joinAnAssembly":"Join an assembly",
-    "requestAccess":"Request access"
-    
+    "requestAccess":"Request access",
+    "failureRequestingAssemblyJoin":"There was a problem requesting to join this assembly",
+    "assemblyJoinRequestCreated":"Your will be notified once an administrator accepts your request"
 }

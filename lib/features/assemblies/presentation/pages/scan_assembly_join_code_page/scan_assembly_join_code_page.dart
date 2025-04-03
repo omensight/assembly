@@ -4,6 +4,7 @@ import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/assembly_join_request_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/join_assembly_controller.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,13 +23,14 @@ class ScanAssemblyJoinCodePage extends HookConsumerWidget {
 
     ref.listen(joinAssemblyControllerProvider, (previous, next) async {
       final assembly = next.valueOrNull;
-      if (assembly != null && previous?.value == null) {
+      final joinCode = assemblyJoinCode.value;
+      if (assembly != null && previous?.value == null && joinCode != null) {
         final state = await showModalBottomSheet(
           isScrollControlled: true,
           context: context,
 
           builder: (context) {
-            return JoinAssemblyDialog(assembly: assembly);
+            return JoinAssemblyDialog(assembly: assembly, joinCode: joinCode);
           },
         );
 
@@ -114,13 +116,42 @@ class ScanAssemblyJoinCodePage extends HookConsumerWidget {
   }
 }
 
-class JoinAssemblyDialog extends StatelessWidget {
-  const JoinAssemblyDialog({super.key, required this.assembly});
+class JoinAssemblyDialog extends ConsumerWidget {
+  const JoinAssemblyDialog({
+    super.key,
+    required this.assembly,
+    required this.joinCode,
+  });
 
   final Assembly assembly;
+  final String joinCode;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(assemblyJoinRequestControllerProvider(assembly.id, joinCode), (
+      previous,
+      next,
+    ) {
+      next.when(
+        data: (data) {
+          if (data != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(LocaleKeys.assemblyJoinRequestCreated.tr()),
+              ),
+            );
+          }
+        },
+        error: (error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(LocaleKeys.failureRequestingAssemblyJoin.tr()),
+            ),
+          );
+        },
+        loading: () {},
+      );
+    });
     return Wrap(
       children: [
         Column(
@@ -144,7 +175,7 @@ class JoinAssemblyDialog extends StatelessWidget {
                   StandardIconButton(
                     icon: Icon(Icons.close),
                     onPressed: () {
-                      context.pop(0);
+                      ref.context.pop(0);
                     },
                   ),
                 ],
@@ -178,6 +209,14 @@ class JoinAssemblyDialog extends StatelessWidget {
                       text: 'Request access',
                       isForegroundColored: true,
                       onPressed: () {
+                        ref
+                            .read(
+                              assemblyJoinRequestControllerProvider(
+                                assembly.id,
+                                joinCode,
+                              ).notifier,
+                            )
+                            .requestAccess();
                         context.pop(0);
                       },
                     ),

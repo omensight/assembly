@@ -1,5 +1,7 @@
 import 'package:assembly/core/providers/data_source_providers.dart';
+import 'package:assembly/features/assemblies/data/repositories/assembly_join_request_repository_impl.dart';
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
+import 'package:assembly/features/assemblies/domain/repositories/assembly_join_request_repository.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assembly_repository.dart';
 import 'package:assembly/features/assemblies/presentation/providers/data_source_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,6 +16,15 @@ AssemblyRepository assemblyRepository(Ref ref) {
     assemblyRemoteDataSource: ref.watch(assemblyRemoteDataSourceProvider),
     updatedEntitiesRecordLocalDataSource: ref.watch(
       updatedEntitiesRecordLocalDataSourceProvider,
+    ),
+  );
+}
+
+@riverpod
+AssemblyJoinRequestRepository assemblyJoinRequestRepository(Ref ref) {
+  return AssemblyJoinRequestRepositoryImpl(
+    assembleJoinRequestRemoteDataSource: ref.watch(
+      assemblyJoinRequestRemoteDataSourceProvider,
     ),
   );
 }
