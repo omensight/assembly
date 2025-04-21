@@ -22,6 +22,12 @@ class AssemblyDetailPage extends ConsumerWidget {
         ),
         actions: [
           StandardIconButton(
+            icon: Icon(Icons.people_alt_outlined),
+            onPressed: () {
+              JoinRequestsListRoute(assemblyId: assemblyId).push(context);
+            },
+          ),
+          StandardIconButton(
             icon: Icon(Icons.qr_code_rounded),
             onPressed: () {
               AssemblyJoiningInformationRoute(

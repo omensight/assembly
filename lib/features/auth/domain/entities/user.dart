@@ -51,4 +51,8 @@ class User extends Insertable<User> {
       username: Value(username),
     ).toColumns(nullToAbsent);
   }
+
+  String get fullName {
+    return '$firstName $lastName';
+  }
 }

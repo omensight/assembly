@@ -207,7 +207,7 @@ class JoinAssemblyDialog extends ConsumerWidget {
                     width: double.infinity,
                     child: StandardButton(
                       text: 'Request access',
-                      isForegroundColored: true,
+                      isBackgroundColored: true,
                       onPressed: () {
                         ref
                             .read(

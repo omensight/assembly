@@ -7,6 +7,10 @@ abstract interface class AssemblyJoinRequestRemoteDataSource {
     String assemblyId,
     AssemblyJoinRequestBodyRequest assemblyJoinRequestBodyRequest,
   );
+
+  Future<List<AssemblyJoinRequest>> getAssemblyJoinRequests(String assemblyId);
+
+  Future<void> acceptJoinRequest(String assemblyId, String joinRequestId);
 }
 
 class AssemblyJoinRequestRepositoryImpl
@@ -28,4 +32,16 @@ class AssemblyJoinRequestRepositoryImpl
     assemblyId,
     assemblyJoinRequestBodyRequest,
   );
+
+  @override
+  Future<List<AssemblyJoinRequest>> getAssemblyJoinRequests(
+    String assemblyId,
+  ) => _assembleJoinRequestRemoteDataSource.getAssemblyJoinRequests(assemblyId);
+
+  @override
+  Future<void> acceptJoinRequest(String assemblyId, String joinRequestId) =>
+      _assembleJoinRequestRemoteDataSource.acceptJoinRequest(
+        assemblyId,
+        joinRequestId,
+      );
 }

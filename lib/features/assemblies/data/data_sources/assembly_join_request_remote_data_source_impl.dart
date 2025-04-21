@@ -21,4 +21,17 @@ abstract class AssemblyJoinRequestRemoteDataSourceImpl
     @Path('assemblyId') String assemblyId,
     @Body() AssemblyJoinRequestBodyRequest assemblyJoinRequestBodyRequest,
   );
+
+  @GET('/assemblies/{assemblyId}/join-requests/')
+  @override
+  Future<List<AssemblyJoinRequest>> getAssemblyJoinRequests(
+    @Path('assemblyId') String assemblyId,
+  );
+
+  @POST('/assemblies/{assemblyId}/join-requests/{joinRequestId}/accept/')
+  @override
+  Future<void> acceptJoinRequest(
+    @Path('assemblyId') String assemblyId,
+    @Path('joinRequestId') String joinRequestId,
+  );
 }

@@ -7,24 +7,29 @@ class StandardButton extends StatelessWidget {
     required this.text,
     this.buttonState = StandardButtonState.standBy,
     this.onPressed,
-    this.isForegroundColored = false,
+    this.customBackgroundColor,
+    this.isBackgroundColored = false,
   });
 
   final String text;
   final StandardButtonState buttonState;
   final void Function()? onPressed;
-  final bool isForegroundColored;
+  final Color? customBackgroundColor;
+  final bool isBackgroundColored;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style:
-          isForegroundColored
-              ? ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.primary,
-                ),
-                foregroundColor: const WidgetStatePropertyAll(Colors.white),
+          isBackgroundColored
+              ? ElevatedButton.styleFrom(
+                backgroundColor:
+                    customBackgroundColor ??
+                    Theme.of(context).colorScheme.primary,
+                foregroundColor:
+                    customBackgroundColor != null || isBackgroundColored
+                        ? Colors.white
+                        : null,
               )
               : null,
       onPressed: switch (buttonState) {
@@ -40,7 +45,7 @@ class StandardButton extends StatelessWidget {
               height: 18,
               child: CircularProgressIndicator(
                 color:
-                    isForegroundColored
+                    isBackgroundColored
                         ? Colors.white
                         : Theme.of(context).colorScheme.primary,
               ),

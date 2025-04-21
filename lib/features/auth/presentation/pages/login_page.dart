@@ -83,7 +83,7 @@ class LoginPage extends HookConsumerWidget {
                   width: double.infinity,
                   child: StandardButton(
                     text: LocaleKeys.signIn.tr(),
-                    isForegroundColored: true,
+                    isBackgroundColored: true,
                     onPressed:
                         loginWithEmailInProgress.value
                             ? null

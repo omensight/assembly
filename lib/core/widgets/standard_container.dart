@@ -31,7 +31,7 @@ class StandardContainer extends StatelessWidget {
             backgroundColor ??
             Theme.of(
               context,
-            ).colorScheme.primaryContainer.withValues(alpha: .33),
+            ).colorScheme.primaryContainer.withValues(alpha: .11),
         child: InkWell(
           borderRadius: BorderRadius.circular(kStandardBorderRadius),
           onTap: onTap,

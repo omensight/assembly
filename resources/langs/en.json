@@ -42,5 +42,11 @@
     "joinAnAssembly":"Join an assembly",
     "requestAccess":"Request access",
     "failureRequestingAssemblyJoin":"There was a problem requesting to join this assembly",
-    "assemblyJoinRequestCreated":"Your will be notified once an administrator accepts your request"
+    "assemblyJoinRequestCreated":"You will be notified once an administrator accepts your request",
+    "failureAcceptingJoinRequest":"There was a problem accepting the join request",
+    "failureLoadingJoinRequests":"There was a problem loading the join requests",
+    "joinRequests":"Join requests",
+    "noJoinRequestsFound":"No join requests found",
+    "acceptJoinRequest":"Accept",
+    "rejectJoinRequest":"Reject"
 }
