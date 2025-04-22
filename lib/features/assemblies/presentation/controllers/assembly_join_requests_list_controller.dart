@@ -28,4 +28,15 @@ class AssemblyJoinRequestsListController
       return Future.error(errorMessage);
     }, (r) => r);
   }
+
+  Future<void> removeRequestById(String requestId) async {
+    final currentState = state;
+    if (currentState is AsyncData) {
+      final updatedRequests =
+          currentState.value!
+              .where((request) => request.id != requestId)
+              .toList();
+      state = AsyncData(updatedRequests);
+    }
+  }
 }

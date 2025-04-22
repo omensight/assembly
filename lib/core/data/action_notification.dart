@@ -3,12 +3,16 @@ part 'action_notification.g.dart';
 
 @JsonSerializable()
 class ActionNotification {
-  final ActionNotificationEntity entity;
-  final ActionNotificationMethod method;
+  @JsonKey(name: 'entity_name')
+  final ActionNotificationEntity entityName;
+  @JsonKey(name: 'http_method')
+  final ActionNotificationMethod httpMethod;
+  final Map<String, dynamic>? data;
 
   ActionNotification({
-    required this.entity,
-    required this.method,
+    required this.entityName,
+    required this.httpMethod,
+    this.data,
   });
 
   Map<String, dynamic> toJson() => _$ActionNotificationToJson(this);
@@ -25,4 +29,7 @@ enum ActionNotificationMethod {
 enum ActionNotificationEntity {
   @JsonValue('assembly')
   assembly,
+
+  @JsonValue('assembly_join_request')
+  assemblyJoinRequest,
 }
