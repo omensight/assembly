@@ -1,3 +1,4 @@
+import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/single_assembly_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
@@ -36,6 +37,12 @@ class AssemblyDetailPage extends ConsumerWidget {
             },
           ),
         ],
+      ),
+      body: Center(
+        child: StandardEmptyView(
+          message: 'No events yet',
+          imagePath: 'assets/empty_views/im_ev_no_events.png',
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_request.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/accept_join_request_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assembly_join_requests_list_controller.dart';
+import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,13 @@ class JoinRequestsListPage extends ConsumerWidget {
           data:
               (joinRequests) =>
                   joinRequests.isEmpty
-                      ? Center(child: Text(LocaleKeys.noJoinRequestsFound.tr()))
+                      ? Center(
+                        child: StandardEmptyView(
+                          imagePath:
+                              'assets/empty_views/im_ev_no_assembly_join_requests.webp',
+                          message: LocaleKeys.noJoinRequestsFound.tr(),
+                        ),
+                      )
                       : ListView.separated(
                         separatorBuilder:
                             (context, index) => const StandardSpace.vertical(),
