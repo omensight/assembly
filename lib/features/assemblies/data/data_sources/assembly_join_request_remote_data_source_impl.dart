@@ -34,4 +34,11 @@ abstract class AssemblyJoinRequestRemoteDataSourceImpl
     @Path('assemblyId') String assemblyId,
     @Path('joinRequestId') String joinRequestId,
   );
+
+  @POST('/assemblies/{assemblyId}/join-requests/{joinRequestId}/reject/')
+  @override
+  Future<void> rejectJoinRequest(
+    @Path('assemblyId') String assemblyId,
+    @Path('joinRequestId') String joinRequestId,
+  );
 }

@@ -6,6 +6,7 @@ import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_request.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/accept_join_request_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assembly_join_requests_list_controller.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/reject_join_request_controller.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -65,16 +66,9 @@ class JoinRequestsListPage extends ConsumerWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   spacing: kStandardSpacing,
                                   children: [
-                                    StandardIconButton(
-                                      isFilled: true,
-                                      icon: Icon(Icons.close),
-                                      isError: true,
-                                      onPressed: () {
-                                        //TODO: Implement reject request functionality
-                                        throw UnimplementedError(
-                                          'Reject request functionality not implemented yet',
-                                        );
-                                      },
+                                    RejectJoinRequestButton(
+                                      assemblyId: assemblyId,
+                                      joinRequest: joinRequest,
                                     ),
                                     AcceptsJoinRequestButton(
                                       assemblyId: assemblyId,
@@ -129,6 +123,54 @@ class AcceptsJoinRequestButton extends ConsumerWidget {
                   ).notifier,
                 )
                 .acceptRequest();
+          },
+        );
+  }
+}
+
+class RejectJoinRequestButton extends ConsumerWidget {
+  const RejectJoinRequestButton({
+    super.key,
+    required this.assemblyId,
+    required this.joinRequest,
+  });
+
+  final String assemblyId;
+  final AssemblyJoinRequest joinRequest;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rejectionAsyncState = ref.watch(
+      rejectJoinRequestControllerProvider(assemblyId, joinRequest.id),
+    );
+
+    return rejectionAsyncState.isLoading
+        ? const CircularProgressIndicator()
+        : StandardIconButton(
+          isFilled: true,
+          icon: Icon(Icons.close),
+          isError: true,
+          onPressed: () {
+            ref
+                .read(
+                  RejectJoinRequestControllerProvider(
+                    assemblyId,
+                    joinRequest.id,
+                  ).notifier,
+                )
+                .rejectRequest()
+                .then((_) {
+                  if (rejectionAsyncState.hasValue &&
+                      rejectionAsyncState.value == true) {
+                    ref
+                        .read(
+                          assemblyJoinRequestsListControllerProvider(
+                            assemblyId,
+                          ).notifier,
+                        )
+                        .removeRequestById(joinRequest.id);
+                  }
+                });
           },
         );
   }

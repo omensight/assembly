@@ -7,6 +7,7 @@ import 'package:assembly/features/assemblies/domain/usecases/get_assembly_by_joi
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_join_code_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_join_requests_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_stream_usecase.dart';
+import 'package:assembly/features/assemblies/domain/usecases/reject_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/providers/repository_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -75,6 +76,15 @@ GetAssemblyJoinRequestsUsecase getAssemblyJoinRequestsUsecase(Ref ref) {
 @riverpod
 AcceptJoinRequestUsecase acceptJoinRequestUsecase(Ref ref) {
   return AcceptJoinRequestUsecase(
+    assemblyJoinRequestRepository: ref.watch(
+      assemblyJoinRequestRepositoryProvider,
+    ),
+  );
+}
+
+@riverpod
+RejectJoinRequestUsecase rejectJoinRequestUsecase(Ref ref) {
+  return RejectJoinRequestUsecase(
     assemblyJoinRequestRepository: ref.watch(
       assemblyJoinRequestRepositoryProvider,
     ),

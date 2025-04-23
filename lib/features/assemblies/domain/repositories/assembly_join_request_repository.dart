@@ -10,4 +10,6 @@ abstract interface class AssemblyJoinRequestRepository {
   Future<List<AssemblyJoinRequest>> getAssemblyJoinRequests(String assemblyId);
 
   Future<void> acceptJoinRequest(String assemblyId, String joinRequestId);
+
+  Future<void> rejectJoinRequest(String assemblyId, String joinRequestId);
 }
