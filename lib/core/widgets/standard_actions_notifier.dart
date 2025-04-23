@@ -39,6 +39,9 @@ class StandardActionsNotifier extends ConsumerWidget {
                   .removeRequestById(assemblyJoinRequest.id);
             }
             break;
+
+          case ActionNotificationEntity.assemblyMember:
+            break;
         }
       }
       ref.watch(actionsChannelProvider);

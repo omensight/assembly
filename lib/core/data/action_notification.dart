@@ -5,13 +5,13 @@ part 'action_notification.g.dart';
 class ActionNotification {
   @JsonKey(name: 'entity_name')
   final ActionNotificationEntity entityName;
-  @JsonKey(name: 'http_method')
-  final ActionNotificationMethod httpMethod;
+  @JsonKey(name: 'notification_type')
+  final InstanceNotificationType notificationType;
   final Map<String, dynamic>? data;
 
   ActionNotification({
     required this.entityName,
-    required this.httpMethod,
+    required this.notificationType,
     this.data,
   });
 
@@ -21,9 +21,11 @@ class ActionNotification {
       _$ActionNotificationFromJson(json);
 }
 
-enum ActionNotificationMethod {
-  @JsonValue('POST')
-  post,
+enum InstanceNotificationType {
+  @JsonValue('save')
+  save,
+  @JsonValue('delete')
+  delete,
 }
 
 enum ActionNotificationEntity {
@@ -32,4 +34,7 @@ enum ActionNotificationEntity {
 
   @JsonValue('assembly_join_request')
   assemblyJoinRequest,
+
+  @JsonValue('assembly_member')
+  assemblyMember,
 }
