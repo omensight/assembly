@@ -12,6 +12,7 @@ class Assemblies extends Table {
   DateTimeColumn get updatedAt => dateTime()();
   TextColumn get name => text()();
   TextColumn get address => text()();
+  BoolColumn get isActive => boolean()();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};
@@ -37,6 +38,9 @@ class Assembly extends Insertable<Assembly> {
   @JsonKey(name: 'address')
   final String address;
 
+  @JsonKey(name: 'is_active')
+  final bool isActive;
+
   Assembly({
     required this.id,
     required this.userFounderId,
@@ -44,6 +48,7 @@ class Assembly extends Insertable<Assembly> {
     required this.updatedAt,
     required this.name,
     required this.address,
+    required this.isActive,
   });
 
   factory Assembly.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +65,7 @@ class Assembly extends Insertable<Assembly> {
       updatedAt: Value(updatedAt),
       name: Value(name),
       address: Value(address),
+      isActive: Value(isActive),
     ).toColumns(nullToAbsent);
   }
 }
