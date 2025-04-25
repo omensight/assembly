@@ -1,6 +1,7 @@
 import 'package:assembly/features/assemblies/presentation/pages/assembly_detail_page/assembly_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assembly_joining_information_page/assembly_joining_information_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/edit_assembly_page/edit_assembly_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/join_requests_list_page/join_requests_list_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/scan_assembly_join_code_page/scan_assembly_join_code_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/user_assemblies_page/user_assemblies_page.dart';
@@ -68,5 +69,17 @@ class JoinRequestsListRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return JoinRequestsListPage(assemblyId: assemblyId);
+  }
+}
+
+@TypedGoRoute<EditAssemblyRoute>(path: '/edit-assembly')
+class EditAssemblyRoute extends GoRouteData {
+  final String assemblyId;
+
+  EditAssemblyRoute({required this.assemblyId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return EditAssemblyPage(assemblyId: assemblyId);
   }
 }

@@ -50,5 +50,10 @@
     "noJoinRequestsFound":"No join requests found",
     "acceptJoinRequest":"Accept",
     "rejectJoinRequest":"Reject",
-    "failureLoadingCurrentAssemblyMember":"There was a problem loading the current assembly member"
+    "failureLoadingCurrentAssemblyMember":"There was a problem loading the current assembly member",
+    "editAssembly": "Edit Assembly",
+    "failureUpdatingAssembly": "There was a problem updating the assembly",
+    "assemblyUpdatedSuccessfully": "Assembly updated successfully",
+    "assemblyNotFound": "Assembly not found",
+    "failureLoadingAssembly": "Failure loading assembly"
 }

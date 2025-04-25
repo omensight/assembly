@@ -42,7 +42,12 @@ class AssemblyDetailPage extends ConsumerWidget {
             },
           ),
           if ([AssemblyMemberRole.admin].contains(currentAssemblyRole))
-            StandardIconButton(icon: Icon(Icons.edit), onPressed: () {}),
+            StandardIconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                EditAssemblyRoute(assemblyId: assemblyId).push(context);
+              },
+            ),
         ],
       ),
       body: Center(

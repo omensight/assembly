@@ -2,6 +2,7 @@ import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
+import 'package:assembly/features/assemblies/domain/models/assembly_update_request.dart';
 
 abstract interface class AssemblyRepository {
   Stream<List<Assembly>> getUserAssembliesStream(int userId);
@@ -9,6 +10,11 @@ abstract interface class AssemblyRepository {
   Future<void> fetchUserAssemblies();
 
   Future<Assembly> createAssembly(AssemblyCreateRequest assemblyCreateRequest);
+
+  Future<Assembly> updateAssembly(
+    String assemblyId,
+    AssemblyUpdateRequest assemblyUpdateRequest,
+  );
 
   Stream<Assembly?> getAssemblyStream(String assemblyId);
 
