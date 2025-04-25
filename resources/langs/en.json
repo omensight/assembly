@@ -55,5 +55,7 @@
     "failureUpdatingAssembly": "There was a problem updating the assembly",
     "assemblyUpdatedSuccessfully": "Assembly updated successfully",
     "assemblyNotFound": "Assembly not found",
-    "failureLoadingAssembly": "Failure loading assembly"
+    "failureLoadingAssembly": "Failure loading assembly",
+    "isActive": "Is active",
+    "isActiveDescription": "Enable or disable the assembly. If it is disabled, members will not be able to join it or view any of its information or activity"
 }

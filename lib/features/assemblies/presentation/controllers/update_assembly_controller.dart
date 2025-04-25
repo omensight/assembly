@@ -16,8 +16,8 @@ class UpdateAssemblyController extends _$UpdateAssemblyController {
   }
 
   Future<void> updateAssembly({
-    required String name,
-    required String address,
+    required String? name,
+    required String? address,
     bool? isActive,
   }) async {
     state = const AsyncLoading();

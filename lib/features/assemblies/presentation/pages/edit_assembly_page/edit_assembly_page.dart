@@ -47,6 +47,7 @@ class EditAssemblyPage extends HookConsumerWidget {
 
     final nameTextController = useTextEditingController();
     final addressTextController = useTextEditingController();
+    final isActive = useState<bool>(true);
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final commonTextValidator = useMemoized(() => CommonTextValidator());
     final updateState = ref.watch(updateAssemblyControllerProvider(assemblyId));
@@ -56,6 +57,7 @@ class EditAssemblyPage extends HookConsumerWidget {
         if (assembly != null) {
           nameTextController.text = assembly.name;
           addressTextController.text = assembly.address;
+          isActive.value = assembly.isActive;
         }
       });
       return null;
@@ -77,8 +79,15 @@ class EditAssemblyPage extends HookConsumerWidget {
                           updateAssemblyControllerProvider(assemblyId).notifier,
                         )
                         .updateAssembly(
-                          name: nameTextController.text,
-                          address: addressTextController.text,
+                          name:
+                              nameTextController.text.isEmpty
+                                  ? null
+                                  : nameTextController.text,
+                          address:
+                              addressTextController.text.isEmpty
+                                  ? null
+                                  : addressTextController.text,
+                          isActive: isActive.value,
                         );
                   }
                 },
@@ -108,6 +117,32 @@ class EditAssemblyPage extends HookConsumerWidget {
                     StandardTextFormField(
                       controller: addressTextController,
                       label: LocaleKeys.address.tr(),
+                    ),
+                    const StandardSpace.vertical(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                LocaleKeys.isActive.tr(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(LocaleKeys.isActiveDescription.tr()),
+                            ],
+                          ),
+                        ),
+                        const StandardSpace.horizontal(),
+                        Switch(
+                          value: isActive.value,
+                          onChanged: (value) {
+                            isActive.value = value;
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
