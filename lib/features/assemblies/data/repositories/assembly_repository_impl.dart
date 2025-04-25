@@ -1,6 +1,7 @@
 import 'package:assembly/core/data/datasources/updated_entities_record_local_data_source.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assembly_repository.dart';
 import 'package:drift/drift.dart';
@@ -16,6 +17,7 @@ abstract interface class AssemblyRemoteDataSource {
   Future<Assembly> postAssembly(AssemblyCreateRequest assemblyCreateRequest);
   Future<AssemblyJoinCode> getAssemblyJoinCode(String assemblyId, bool refresh);
   Future<Assembly> getAssemblyByJoinCode(String joinCode);
+  Future<AssemblyMember> getCurrentAssemblyMember(String assemblyId);
 }
 
 class AssemblyRepositoryImpl implements AssemblyRepository {
@@ -75,4 +77,8 @@ class AssemblyRepositoryImpl implements AssemblyRepository {
   @override
   Future<Assembly> getAssemblyByJoinCode(String joinCode) =>
       _assemblyRemoteDataSource.getAssemblyByJoinCode(joinCode);
+
+  @override
+  Future<AssemblyMember> getCurrentAssemblyMember(String assemblyId) =>
+      _assemblyRemoteDataSource.getCurrentAssemblyMember(assemblyId);
 }

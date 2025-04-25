@@ -26,6 +26,7 @@ void main() {
           address: 'Address',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
+          isActive: true,
           userFounderId: 1,
         ),
       ];

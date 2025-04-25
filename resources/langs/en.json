@@ -49,5 +49,6 @@
     "joinRequests":"Join requests",
     "noJoinRequestsFound":"No join requests found",
     "acceptJoinRequest":"Accept",
-    "rejectJoinRequest":"Reject"
+    "rejectJoinRequest":"Reject",
+    "failureLoadingCurrentAssemblyMember":"There was a problem loading the current assembly member"
 }

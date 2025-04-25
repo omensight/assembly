@@ -1,5 +1,7 @@
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/single_assembly_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,9 @@ class AssemblyDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final assemblyAsync = ref.watch(
       singleAssemblyControllerProvider(assemblyId),
+    );
+    final currentAssemblyRole = ref.watch(
+      currentAssemblyMemberRoleProvider(assemblyId),
     );
     return Scaffold(
       appBar: AppBar(
@@ -36,6 +41,8 @@ class AssemblyDetailPage extends ConsumerWidget {
               ).push(context);
             },
           ),
+          if ([AssemblyMemberRole.admin].contains(currentAssemblyRole))
+            StandardIconButton(icon: Icon(Icons.edit), onPressed: () {}),
         ],
       ),
       body: Center(

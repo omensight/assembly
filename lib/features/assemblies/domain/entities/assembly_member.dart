@@ -34,12 +34,15 @@ class AssemblyMember extends Insertable<AssemblyMember> {
   @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
+  final AssemblyMemberRole role;
+
   AssemblyMember({
     required this.id,
     required this.assemblyId,
     required this.userId,
     required this.createdAt,
     required this.updatedAt,
+    this.role = AssemblyMemberRole.member,
   });
 
   factory AssemblyMember.fromJson(Map<String, dynamic> json) =>
@@ -57,4 +60,11 @@ class AssemblyMember extends Insertable<AssemblyMember> {
       updatedAt: Value(updatedAt),
     ).toColumns(nullToAbsent);
   }
+}
+
+enum AssemblyMemberRole {
+  @JsonValue('ADMIN')
+  admin,
+  @JsonValue('MEMBER')
+  member,
 }

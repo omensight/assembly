@@ -76,8 +76,6 @@ class CreateAssemblyPage extends HookConsumerWidget {
                 StandardTextFormField(
                   controller: addressTextController,
                   label: LocaleKeys.address.tr(),
-                  validator:
-                      (value) => commonTextValidator.requiredField(value),
                 ),
               ],
             ),

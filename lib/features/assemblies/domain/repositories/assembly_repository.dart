@@ -1,5 +1,6 @@
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 
 abstract interface class AssemblyRepository {
@@ -14,4 +15,6 @@ abstract interface class AssemblyRepository {
   Future<AssemblyJoinCode> getAssemblyJoinCode(String assemblyId, bool refresh);
 
   Future<Assembly> getAssemblyByJoinCode(String joinCode);
+
+  Future<AssemblyMember> getCurrentAssemblyMember(String assemblyId);
 }

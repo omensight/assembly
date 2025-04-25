@@ -1,6 +1,7 @@
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_join_code.dart';
+import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/models/assembly_create_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -37,4 +38,10 @@ abstract class AssemblyRemoteDataSourceImpl
   @GET('/assemblies/find-by-join-code/')
   @override
   Future<Assembly> getAssemblyByJoinCode(@Query('join_code') String joinCode);
+
+  @GET('/assemblies/{assemblyId}/current-member/')
+  @override
+  Future<AssemblyMember> getCurrentAssemblyMember(
+    @Path('assemblyId') String assemblyId,
+  );
 }
