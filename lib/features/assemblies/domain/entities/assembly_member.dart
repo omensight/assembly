@@ -1,3 +1,4 @@
+import 'package:assembly/features/auth/domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'assembly_member.g.dart';
 
@@ -9,24 +10,23 @@ class AssemblyMember {
   @JsonKey(name: 'assembly_id')
   final String assemblyId;
 
-  @JsonKey(name: 'user_id')
-  final int userId;
-
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
 
   @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
+  final User user;
+
   final AssemblyMemberRole role;
 
   AssemblyMember({
     required this.id,
     required this.assemblyId,
-    required this.userId,
     required this.createdAt,
     required this.updatedAt,
     this.role = AssemblyMemberRole.member,
+    required this.user,
   });
 
   factory AssemblyMember.fromJson(Map<String, dynamic> json) =>

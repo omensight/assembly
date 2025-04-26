@@ -49,19 +49,27 @@ class AssemblyMembersPage extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'User ID: ${member.userId}',
+                                      '${member.user.fullName} (${member.user.id})',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      'Role: ${member.role.name.toUpperCase()}',
+                                      switch (member.role) {
+                                        AssemblyMemberRole.admin =>
+                                          LocaleKeys
+                                              .assemblyMemberRoleAdministrator
+                                              .tr(),
+                                        AssemblyMemberRole.member =>
+                                          LocaleKeys.assemblyMemberRoleMember
+                                              .tr(),
+                                      },
                                       style: TextStyle(
                                         color:
                                             member.role ==
                                                     AssemblyMemberRole.admin
-                                                ? Colors.purple
-                                                : Colors.blue,
+                                                ? Colors.blue
+                                                : null,
                                       ),
                                     ),
                                   ],

@@ -60,5 +60,7 @@
     "isActiveDescription": "Enable or disable the assembly. If it is disabled, members will not be able to join it or view any of its information or activity",
     "assemblyMembers": "Assembly Members",
     "noMembersFound": "No members found",
-    "failureLoadingAssemblyMembers": "There was a problem loading the assembly members"
+    "failureLoadingAssemblyMembers": "There was a problem loading the assembly members",
+    "assemblyMemberRoleAdministrator": "Admininstrator",
+    "assemblyMemberRoleMember": "Member"
 }
