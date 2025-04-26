@@ -1,9 +1,12 @@
+import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/single_assembly_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
+import 'package:assembly/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -56,10 +59,14 @@ class AssemblyDetailPage extends ConsumerWidget {
             ),
         ],
       ),
-      body: Center(
-        child: StandardEmptyView(
-          message: 'No events yet',
-          imagePath: 'assets/empty_views/im_ev_no_events.png',
+      body: Padding(
+        padding: standardHorizontalPadding,
+        child: Center(
+          child: StandardEmptyView(
+            message: LocaleKeys.noEventsYet.tr(),
+            title: LocaleKeys.noEventsYetTitle.tr(),
+            imagePath: 'assets/empty_views/im_ev_no_events.png',
+          ),
         ),
       ),
     );

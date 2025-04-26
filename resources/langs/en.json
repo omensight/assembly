@@ -62,5 +62,7 @@
     "noMembersFound": "No members found",
     "failureLoadingAssemblyMembers": "There was a problem loading the assembly members",
     "assemblyMemberRoleAdministrator": "Admininstrator",
-    "assemblyMemberRoleMember": "Member"
+    "assemblyMemberRoleMember": "Member",
+    "noEventsYetTitle": "No events or tasks available",
+    "noEventsYet": "There are no events or tasks available at this time. If any are scheduled, they will be displayed here."
 }
