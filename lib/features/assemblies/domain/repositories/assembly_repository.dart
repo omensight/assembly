@@ -23,4 +23,6 @@ abstract interface class AssemblyRepository {
   Future<Assembly> getAssemblyByJoinCode(String joinCode);
 
   Future<AssemblyMember> getCurrentAssemblyMember(String assemblyId);
+
+  Future<List<AssemblyMember>> getAssemblyMembers(String assemblyId);
 }

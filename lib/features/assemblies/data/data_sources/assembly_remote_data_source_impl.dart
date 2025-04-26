@@ -52,4 +52,10 @@ abstract class AssemblyRemoteDataSourceImpl
   Future<AssemblyMember> getCurrentAssemblyMember(
     @Path('assemblyId') String assemblyId,
   );
+
+  @GET('/assemblies/{assemblyId}/members/')
+  @override
+  Future<List<AssemblyMember>> getAssemblyMembers(
+    @Path('assemblyId') String assemblyId,
+  );
 }

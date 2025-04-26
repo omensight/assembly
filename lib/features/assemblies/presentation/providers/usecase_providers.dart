@@ -6,6 +6,7 @@ import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_by_join_code_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_join_code_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_join_requests_usecase.dart';
+import 'package:assembly/features/assemblies/domain/usecases/get_assembly_members_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_stream_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_current_assembly_member_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/reject_join_request_usecase.dart';
@@ -103,6 +104,13 @@ GetCurrentAssemblyMemberUseCase getCurrentAssemblyMemberUsecase(Ref ref) {
 @riverpod
 UpdateAssemblyUsecase updateAssemblyUsecase(Ref ref) {
   return UpdateAssemblyUsecase(
+    assemblyRepository: ref.watch(assemblyRepositoryProvider),
+  );
+}
+
+@riverpod
+GetAssemblyMembersUsecase getAssemblyMembersUsecase(Ref ref) {
+  return GetAssemblyMembersUsecase(
     assemblyRepository: ref.watch(assemblyRepositoryProvider),
   );
 }
