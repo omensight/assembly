@@ -1,11 +1,10 @@
 import 'package:assembly/core/data/database/assembly_database.dart';
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly.dart';
-import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:drift/drift.dart';
 part 'assembly_local_data_source_impl.g.dart';
 
-@DriftAccessor(tables: [Assemblies, AssemblyMembers])
+@DriftAccessor(tables: [Assemblies])
 class AssemblyLocalDataSourceImpl extends DatabaseAccessor<AssemblyDatabase>
     with _$AssemblyLocalDataSourceImplMixin
     implements AssemblyLocalDataSource {
