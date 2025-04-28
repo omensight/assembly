@@ -2,6 +2,7 @@ import 'package:assembly/features/assemblies/presentation/pages/assembly_detail_
 import 'package:assembly/features/assemblies/presentation/pages/assembly_joining_information_page/assembly_joining_information_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assembly_members_page/assembly_members_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/create_assignment_page/create_assignment_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/edit_assembly_page/edit_assembly_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/join_requests_list_page/join_requests_list_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/scan_assembly_join_code_page/scan_assembly_join_code_page.dart';
@@ -94,5 +95,17 @@ class EditAssemblyRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return EditAssemblyPage(assemblyId: assemblyId);
+  }
+}
+
+@TypedGoRoute<CreateAssignmentRoute>(path: '/create-assignment')
+class CreateAssignmentRoute extends GoRouteData {
+  final String assemblyId;
+
+  CreateAssignmentRoute({required this.assemblyId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return CreateAssignmentPage(assemblyId: assemblyId);
   }
 }

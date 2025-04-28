@@ -1,6 +1,7 @@
 import 'package:assembly/features/assemblies/domain/usecases/accept_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_usecase.dart';
+import 'package:assembly/features/assemblies/domain/usecases/create_assignment_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/fetch_user_assemblies_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list_stream_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assembly_by_join_code_usecase.dart';
@@ -112,5 +113,12 @@ UpdateAssemblyUsecase updateAssemblyUsecase(Ref ref) {
 GetAssemblyMembersUsecase getAssemblyMembersUsecase(Ref ref) {
   return GetAssemblyMembersUsecase(
     assemblyRepository: ref.watch(assemblyRepositoryProvider),
+  );
+}
+
+@riverpod
+CreateAssignmentUsecase createAssignmentUsecase(Ref ref) {
+  return CreateAssignmentUsecase(
+    repository: ref.watch(assignmentRepositoryProvider),
   );
 }

@@ -64,5 +64,14 @@
     "assemblyMemberRoleAdministrator": "Admininstrator",
     "assemblyMemberRoleMember": "Member",
     "noEventsYetTitle": "No events or tasks available",
-    "noEventsYet": "There are no events or tasks available at this time. If any are scheduled, they will be displayed here."
+    "noEventsYet": "There are no events or tasks available at this time. If any are scheduled, they will be displayed here.",
+    "createAssignmentErrorNetwork": "There was a problem creating the assignment",
+    "createAssignment": "Create Assignment",
+    "assignmentName": "Name",
+    "assignmentDescription": "Description",
+    "rotationDuration": "Rotation Duration (days)",
+    "assignmentCreatedSuccessfully": "Assignment created successfully",
+    "errorCreatingAssignment": "Error creating assignment",
+    "addAssignment": "Add Assignment",
+    "failureCreatingAssignment": "Failed to create assignment"
 }

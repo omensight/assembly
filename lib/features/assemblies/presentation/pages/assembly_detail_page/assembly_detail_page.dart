@@ -31,6 +31,14 @@ class AssemblyDetailPage extends ConsumerWidget {
         ),
         actions: [
           StandardIconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              CreateAssignmentRoute(assemblyId: assemblyId).push(context);
+            },
+
+            tooltipMessage: LocaleKeys.addAssignment.tr(),
+          ),
+          StandardIconButton(
             icon: Icon(Icons.group),
             onPressed: () {
               AssemblyMembersRoute(assemblyId: assemblyId).push(context);
