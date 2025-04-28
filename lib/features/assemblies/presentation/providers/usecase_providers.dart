@@ -1,3 +1,4 @@
+import 'package:assembly/features/assemblies/domain/usecases/assignments/get_assignments_groups_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/accept_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_usecase.dart';
@@ -120,5 +121,12 @@ GetAssemblyMembersUsecase getAssemblyMembersUsecase(Ref ref) {
 CreateAssignmentUsecase createAssignmentUsecase(Ref ref) {
   return CreateAssignmentUsecase(
     repository: ref.watch(assignmentRepositoryProvider),
+  );
+}
+
+@riverpod
+GetAssignmentsGroupsUsecase getAssignmentsGroupsUsecase(Ref ref) {
+  return GetAssignmentsGroupsUsecase(
+    assignmentRemoteDataSource: ref.watch(assignmentRepositoryProvider),
   );
 }

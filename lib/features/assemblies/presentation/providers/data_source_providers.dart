@@ -1,12 +1,12 @@
 import 'package:assembly/core/providers/client_providers.dart';
 import 'package:assembly/core/providers/database_providers.dart';
-import 'package:assembly/features/assemblies/data/data_sources/assignment_remote_data_source.dart';
 import 'package:assembly/features/assemblies/data/data_sources/assignment_remote_data_source_impl.dart';
 import 'package:assembly/features/assemblies/data/data_sources/assembly_join_request_remote_data_source_impl.dart';
 import 'package:assembly/features/assemblies/data/data_sources/assembly_local_data_source_impl.dart';
 import 'package:assembly/features/assemblies/data/data_sources/assembly_remote_data_source_impl.dart';
 import 'package:assembly/features/assemblies/data/repositories/assembly_join_request_repository_impl.dart';
 import 'package:assembly/features/assemblies/data/repositories/assembly_repository_impl.dart';
+import 'package:assembly/features/assemblies/data/repositories/assignment_repository_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

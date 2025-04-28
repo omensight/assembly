@@ -73,5 +73,6 @@
     "assignmentCreatedSuccessfully": "Assignment created successfully",
     "errorCreatingAssignment": "Error creating assignment",
     "addAssignment": "Add Assignment",
-    "failureCreatingAssignment": "Failed to create assignment"
+    "failureCreatingAssignment": "Failed to create assignment",
+    "failureLoadingAssignmentGroups": "There was a problem loading the assignment groups"
 }

@@ -3,6 +3,7 @@ import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_button.dart';
 import 'package:assembly/core/widgets/standard_text_form_field.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/create_assignment_controller.dart';
+import 'package:assembly/features/assemblies/routes.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,10 @@ class CreateAssignmentPage extends HookConsumerWidget {
               content: Text(LocaleKeys.assignmentCreatedSuccessfully.tr()),
             ),
           );
-          Navigator.of(context).pop();
+          AssignmentDetailRoute(
+            assemblyId: assemblyId,
+            assignmentId: assignment.id,
+          ).pushReplacement(context);
         }
       });
 
