@@ -1,6 +1,7 @@
 import 'package:assembly/core/widgets/standard_button.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignments_list_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
@@ -23,9 +24,18 @@ class AssignmentDetailPage extends ConsumerWidget {
       assignmentsListControllerProvider(assemblyId, assignmentId),
     );
 
+    final assignmentAsync = ref.watch(
+      assignmentControllerProvider(assemblyId, assignmentId),
+    );
+
     return Scaffold(
-      //TODO set assignment name
-      appBar: AppBar(title: Text('Assignment')),
+      appBar: AppBar(
+        title: assignmentAsync.when(
+          data: (assignment) => Text(assignment.name),
+          error: (_, _) => Text(LocaleKeys.assignment.tr()),
+          loading: () => Text(LocaleKeys.assignment.tr()),
+        ),
+      ),
       body: assignmentGroupsAsync.when(
         data: (assignmentGroups) {
           return assignmentGroups.isEmpty

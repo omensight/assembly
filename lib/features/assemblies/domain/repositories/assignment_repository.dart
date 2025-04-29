@@ -12,4 +12,6 @@ abstract class AssignmentRepository {
     String assemblyId,
     String assignmentId,
   );
+
+  Future<Assignment> getAssignment(String assemblyId, String assignmentId);
 }
