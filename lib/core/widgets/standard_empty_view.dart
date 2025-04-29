@@ -7,10 +7,12 @@ class StandardEmptyView extends StatelessWidget {
     this.imagePath,
     required this.message,
     this.title,
+    this.actionButton,
   });
   final String? imagePath;
   final String? title;
   final String message;
+  final Widget? actionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,9 @@ class StandardEmptyView extends StatelessWidget {
           if (title != null)
             Text(title!, style: Theme.of(context).textTheme.titleMedium),
           const StandardSpace.vertical(),
-          Text(message),
+          Text(message, textAlign: TextAlign.center),
+          const StandardSpace.vertical(),
+          if (actionButton != null) actionButton!,
         ],
       ),
     );

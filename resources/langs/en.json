@@ -74,5 +74,9 @@
     "errorCreatingAssignment": "Error creating assignment",
     "addAssignment": "Add Assignment",
     "failureCreatingAssignment": "Failed to create assignment",
-    "failureLoadingAssignmentGroups": "There was a problem loading the assignment groups"
+    "failureLoadingAssignmentGroups": "There was a problem loading the assignment groups",
+    "youHaveToInitializeThisAssignment": "You have to initialize this assignment by assigning members and specifying the cycles.",
+    "messageAssignmentNotInitialized": "This assignment has not been initialized yet. Please contact an administrator.",
+    "titleAssignmentNotInitialized": "Assignment not initialized",
+    "initialize": "Initialize"
 }
