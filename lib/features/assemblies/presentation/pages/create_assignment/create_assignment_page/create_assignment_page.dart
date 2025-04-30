@@ -33,7 +33,7 @@ class CreateAssignmentPage extends HookConsumerWidget {
               content: Text(LocaleKeys.assignmentCreatedSuccessfully.tr()),
             ),
           );
-          AssignmentDetailRoute(
+          AddAssignmentDetailsRoute(
             assemblyId: assemblyId,
             assignmentId: assignment.id,
           ).pushReplacement(context);
@@ -76,9 +76,10 @@ class CreateAssignmentPage extends HookConsumerWidget {
                 validator: (value) => commonTextValidator.requiredField(value),
               ),
               SizedBox(height: 16),
+              //TODO: delete
               StandardTextFormField(
                 controller: rotationDurationController,
-                label: LocaleKeys.rotationDuration.tr(),
+                label: LocaleKeys.turnDuration.tr(),
                 standardInputType: StandardInputType.numeric,
                 validator: (value) => commonTextValidator.requiredField(value),
               ),

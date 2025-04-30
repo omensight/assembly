@@ -3,6 +3,7 @@ import 'package:assembly/features/assemblies/presentation/pages/assembly_joining
 import 'package:assembly/features/assemblies/presentation/pages/assembly_members_page/assembly_members_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/assignment_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assembly_page/create_assembly_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/create_assignment/add_assignment_details_page/add_assignment_details_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/create_assignment/create_assignment_page/create_assignment_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/edit_assembly_page/edit_assembly_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/join_requests_list_page/join_requests_list_page.dart';
@@ -108,6 +109,25 @@ class CreateAssignmentRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return CreateAssignmentPage(assemblyId: assemblyId);
+  }
+}
+
+@TypedGoRoute<AddAssignmentDetailsRoute>(path: '/add-assignment-details')
+class AddAssignmentDetailsRoute extends GoRouteData {
+  final String assemblyId;
+  final String assignmentId;
+
+  AddAssignmentDetailsRoute({
+    required this.assemblyId,
+    required this.assignmentId,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AddAssignmentDetailsPage(
+      assemblyId: assemblyId,
+      assignmentId: assignmentId,
+    );
   }
 }
 

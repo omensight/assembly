@@ -19,6 +19,7 @@ const String appName = String.fromEnvironment(
 );
 final DateFormat kStandardDateFormat = DateFormat('dd/MM/yyyy');
 final DateFormat kStandardDateAndTimeFormat = DateFormat('dd/MM/yyyy - HH:mm');
+final TimeOfDayFormat kStandardTimeOfDayFormat = TimeOfDayFormat.HH_colon_mm;
 final DateTime kInitialCalendarDate = DateTime(2024);
 
 String formatTimeOfDay(TimeOfDay time) {

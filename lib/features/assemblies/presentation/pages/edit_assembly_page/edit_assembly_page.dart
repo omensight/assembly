@@ -3,6 +3,7 @@ import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_adaptable_width_container.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
+import 'package:assembly/core/widgets/standard_switch.dart';
 import 'package:assembly/core/widgets/standard_text_form_field.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/single_assembly_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/update_assembly_controller.dart';
@@ -100,6 +101,10 @@ class EditAssemblyPage extends HookConsumerWidget {
             return Center(child: Text(LocaleKeys.assemblyNotFound.tr()));
           }
 
+          final isAssemblyActiveStateNotifier = useState<bool>(
+            assembly.isActive,
+          );
+
           return StandardAdaptableWidthContainer(
             child: Padding(
               padding: standardPadding,
@@ -119,30 +124,10 @@ class EditAssemblyPage extends HookConsumerWidget {
                       label: LocaleKeys.address.tr(),
                     ),
                     const StandardSpace.vertical(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                LocaleKeys.isActive.tr(),
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(LocaleKeys.isActiveDescription.tr()),
-                            ],
-                          ),
-                        ),
-                        const StandardSpace.horizontal(),
-                        Switch(
-                          value: isActive.value,
-                          onChanged: (value) {
-                            isActive.value = value;
-                          },
-                        ),
-                      ],
+                    StandardSwitch(
+                      title: LocaleKeys.isActive.tr(),
+                      description: LocaleKeys.isActiveDescription.tr(),
+                      switchStateNotifier: isAssemblyActiveStateNotifier,
                     ),
                   ],
                 ),

@@ -11,8 +11,6 @@ class Assignment {
   final String assemblyId;
   @JsonKey(name: 'member_issuer_id')
   final String memberIssuerId;
-  @JsonKey(name: 'rotation_duration')
-  final int rotationDuration;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')
@@ -24,7 +22,6 @@ class Assignment {
     required this.description,
     required this.assemblyId,
     required this.memberIssuerId,
-    required this.rotationDuration,
     required this.createdAt,
     required this.updatedAt,
   });
