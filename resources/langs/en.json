@@ -92,8 +92,11 @@
     "startDate": "Start Date",
     "startDateAndTime": "Start Date and Time",
     "turns": "Turns",
-    "cycleResetTime": "Cycle Reset Time",
+    "turnResetTime": "Cycle Reset Time",
     "automaticIndividualGroupsSelectionNotice": "Each member will be individually assigned to this assignment. The system will automatically determine the turns every {} days.",
     "automaticGroupGroupsSelectionNotice": "The system will automatically determine the turns every {} days. The members will be divided into groups of {} members each.",
-    "manualGroupsSelectionNotice": "You will be prompted to create the groups and assign members to them. Each turn will be assigned to a group of members in the order in which the groups were created."
+    "manualGroupsSelectionNotice": "You will be prompted to create the groups and assign members to them. Each turn will be assigned to a group of members in the order in which the groups were created.",
+    "failureCreatingAssignmentSettings": "The assignment settings could not be created.",
+    "saveAndFinish": "Save and Finish",
+    "saveAndContinue": "Save and Continue"
 }

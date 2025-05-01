@@ -3,6 +3,7 @@ import 'package:assembly/features/assemblies/domain/usecases/assignments/get_ass
 import 'package:assembly/features/assemblies/domain/usecases/accept_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assembly_usecase.dart';
+import 'package:assembly/features/assemblies/domain/usecases/create_assignment_settings_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/create_assignment_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/fetch_user_assemblies_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list_stream_usecase.dart';
@@ -136,5 +137,12 @@ GetAssignmentsGroupsUsecase getAssignmentsGroupsUsecase(Ref ref) {
 GetAssignmentUsecase getAssignmentUsecase(Ref ref) {
   return GetAssignmentUsecase(
     assignmentRepository: ref.watch(assignmentRepositoryProvider),
+  );
+}
+
+@riverpod
+CreateAssignmentSettingsUsecase createAssignmentSettingsUsecase(Ref ref) {
+  return CreateAssignmentSettingsUsecase(
+    repository: ref.watch(assignmentRepositoryProvider),
   );
 }
