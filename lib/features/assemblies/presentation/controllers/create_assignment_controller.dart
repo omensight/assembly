@@ -18,7 +18,6 @@ class CreateAssignmentController extends _$CreateAssignmentController {
     required String assemblyId,
     required String name,
     required String description,
-    required int rotationDuration,
   }) async {
     state = const AsyncLoading();
 
@@ -29,7 +28,6 @@ class CreateAssignmentController extends _$CreateAssignmentController {
                 assemblyId: assemblyId,
                 name: name,
                 description: description,
-                rotationDuration: rotationDuration,
               ),
             )
             .run())

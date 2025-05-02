@@ -14,13 +14,11 @@ class CreateAssignmentParams extends Params {
   final String assemblyId;
   final String name;
   final String description;
-  final int rotationDuration;
 
   CreateAssignmentParams({
     required this.assemblyId,
     required this.name,
     required this.description,
-    required this.rotationDuration,
   });
 }
 
@@ -39,7 +37,6 @@ class CreateAssignmentUsecase
       final request = AssignmentCreateRequest(
         name: params.name,
         description: params.description,
-        rotationDuration: params.rotationDuration,
       );
 
       return _repository.createAssignment(

@@ -19,7 +19,6 @@ class CreateAssignmentPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final nameController = useTextEditingController();
     final descriptionController = useTextEditingController();
-    final rotationDurationController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
     final state = ref.watch(createAssignmentControllerProvider);
@@ -76,13 +75,7 @@ class CreateAssignmentPage extends HookConsumerWidget {
                 validator: (value) => commonTextValidator.requiredField(value),
               ),
               SizedBox(height: 16),
-              //TODO: delete
-              StandardTextFormField(
-                controller: rotationDurationController,
-                label: LocaleKeys.turnDuration.tr(),
-                standardInputType: StandardInputType.numeric,
-                validator: (value) => commonTextValidator.requiredField(value),
-              ),
+
               SizedBox(height: 24),
               StandardButton(
                 text: LocaleKeys.createAssignment.tr(),
@@ -94,9 +87,6 @@ class CreateAssignmentPage extends HookConsumerWidget {
                   if (formKey.currentState?.validate() ?? false) {
                     final name = nameController.text;
                     final description = descriptionController.text;
-                    final rotationDuration = int.parse(
-                      rotationDurationController.text,
-                    );
 
                     ref
                         .read(createAssignmentControllerProvider.notifier)
@@ -104,7 +94,6 @@ class CreateAssignmentPage extends HookConsumerWidget {
                           assemblyId: assemblyId,
                           name: name,
                           description: description,
-                          rotationDuration: rotationDuration,
                         );
                   }
                 },

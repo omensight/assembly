@@ -6,14 +6,8 @@ part 'assignment_create_request.g.dart';
 class AssignmentCreateRequest {
   final String name;
   final String description;
-  @JsonKey(name: 'rotation_duration')
-  final int rotationDuration;
 
-  AssignmentCreateRequest({
-    required this.name,
-    required this.description,
-    required this.rotationDuration,
-  });
+  AssignmentCreateRequest({required this.name, required this.description});
 
   factory AssignmentCreateRequest.fromJson(Map<String, dynamic> json) =>
       _$AssignmentCreateRequestFromJson(json);
