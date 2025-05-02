@@ -106,19 +106,27 @@ class AssignmentGroupsEmptyStateView extends ConsumerWidget {
     );
     return [AssemblyMemberRole.admin].contains(currentAssemblyRole)
         ? StandardEmptyView(
-          title: LocaleKeys.titleAssignmentNotConfigured.tr(),
+          title: LocaleKeys.noGroupsFoundTitle.tr(),
           imagePath: 'assets/empty_views/im_ev_no_events.png',
-          message: LocaleKeys.youHaveToInitializeThisAssignment.tr(),
-          actionButton: StandardButton(
-            text: LocaleKeys.initialize.tr(),
-            isBackgroundColored: true,
-            onPressed: () {
-              CreateAssignmentSettingsRoute(
-                assemblyId: assemblyId,
-                assignmentId: assignmentId,
-              ).go(context);
-            },
-          ),
+          message: switch (currentAssemblyRole) {
+            AssemblyMemberRole.admin =>
+              LocaleKeys.noGroupsFoundDescriptionForAdmin.tr(),
+            AssemblyMemberRole.member =>
+              LocaleKeys.noGroupsFoundDescriptionForMember.tr(),
+          },
+          actionButton:
+              currentAssemblyRole == AssemblyMemberRole.admin
+                  ? StandardButton(
+                    text: LocaleKeys.createGroups.tr(),
+                    isBackgroundColored: true,
+                    onPressed: () {
+                      CreateAssignmentSettingsRoute(
+                        assemblyId: assemblyId,
+                        assignmentId: assignmentId,
+                      ).go(context);
+                    },
+                  )
+                  : null,
         )
         : StandardEmptyView(
           imagePath: 'assets/empty_views/im_ev_no_events.png',
