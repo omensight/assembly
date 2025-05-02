@@ -112,19 +112,21 @@ class CreateAssignmentRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<AddAssignmentDetailsRoute>(path: '/add-assignment-details')
-class AddAssignmentDetailsRoute extends GoRouteData {
+@TypedGoRoute<CreateAssignmentSettingsRoute>(
+  path: '/create-assignment-settings',
+)
+class CreateAssignmentSettingsRoute extends GoRouteData {
   final String assemblyId;
   final String assignmentId;
 
-  AddAssignmentDetailsRoute({
+  CreateAssignmentSettingsRoute({
     required this.assemblyId,
     required this.assignmentId,
   });
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return AddAssignmentDetailsPage(
+    return CreateAssignmentSettingsPage(
       assemblyId: assemblyId,
       assignmentId: assignmentId,
     );

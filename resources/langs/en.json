@@ -75,9 +75,10 @@
     "failureCreatingAssignment": "Failed to create assignment",
     "failureLoadingAssignmentGroups": "There was a problem loading the assignment groups",
     "failureLoadingAssignment": "There was a problem loading the assignment information",
+    "failureLoadingAssignmentSettings": "There was a problem loading the assignment settings",
     "youHaveToInitializeThisAssignment": "You have to initialize this assignment by assigning members and specifying the cycles.",
     "messageAssignmentNotInitialized": "This assignment has not been initialized yet. Please contact an administrator.",
-    "titleAssignmentNotInitialized": "Assignment not initialized",
+    "titleAssignmentNotConfigured": "Assignment not configured",
     "initialize": "Initialize",
     "turnDuration": "Turn duration",
     "assignment": "Assignment",
@@ -98,5 +99,8 @@
     "manualGroupsSelectionNotice": "You will be prompted to create the groups and assign members to them. Each turn will be assigned to a group of members in the order in which the groups were created.",
     "failureCreatingAssignmentSettings": "The assignment settings could not be created.",
     "saveAndFinish": "Save and Finish",
-    "saveAndContinue": "Save and Continue"
+    "saveAndContinue": "Save and Continue",
+    "thisAssignmentHasNotBeenConfiguredYetForMember": "This assignment has not been configured yet. Please contact an administrator.",
+    "thisAssignmentHasNotBeenConfiguredYetForAdmin": "This assignment has not been configured yet.",
+    "configureAssignment": "Configure Assignment"
 }

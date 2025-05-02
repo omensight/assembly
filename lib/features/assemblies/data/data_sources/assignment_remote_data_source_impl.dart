@@ -25,9 +25,7 @@ abstract class AssignmentRemoteDataSourceImpl
     @Body() AssignmentCreateRequest request,
   );
 
-  @POST(
-    '/assemblies/{assemblyId}/assignments/{assignmentId}/assignment-settings/',
-  )
+  @POST('/assemblies/{assemblyId}/assignments/{assignmentId}/settings/')
   @override
   Future<AssignmentSettings> createAssignmentSettings(
     @Path('assemblyId') String assemblyId,
@@ -45,6 +43,15 @@ abstract class AssignmentRemoteDataSourceImpl
   @GET('/assemblies/{assemblyId}/assignments/{assignmentId}/')
   @override
   Future<Assignment> getAssignment(
+    @Path('assemblyId') String assemblyId,
+    @Path('assignmentId') String assignmentId,
+  );
+
+  @GET(
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/settings/{assignmentId}',
+  )
+  @override
+  Future<AssignmentSettings> getAssignmentSettings(
     @Path('assemblyId') String assemblyId,
     @Path('assignmentId') String assignmentId,
   );

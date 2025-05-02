@@ -16,10 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddAssignmentDetailsPage extends HookConsumerWidget {
+class CreateAssignmentSettingsPage extends HookConsumerWidget {
   final String assemblyId;
   final String assignmentId;
-  const AddAssignmentDetailsPage({
+  const CreateAssignmentSettingsPage({
     super.key,
     required this.assemblyId,
     required this.assignmentId,

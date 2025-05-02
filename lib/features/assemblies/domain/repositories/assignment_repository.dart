@@ -22,4 +22,9 @@ abstract class AssignmentRepository {
   );
 
   Future<Assignment> getAssignment(String assemblyId, String assignmentId);
+
+  Future<AssignmentSettings> getAssignmentSettings(
+    String assemblyId,
+    String assignmentId,
+  );
 }

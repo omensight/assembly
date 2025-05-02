@@ -33,7 +33,7 @@ class CreateAssignmentPage extends HookConsumerWidget {
               content: Text(LocaleKeys.assignmentCreatedSuccessfully.tr()),
             ),
           );
-          AddAssignmentDetailsRoute(
+          CreateAssignmentSettingsRoute(
             assemblyId: assemblyId,
             assignmentId: assignment.id,
           ).pushReplacement(context);
