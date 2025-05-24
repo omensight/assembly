@@ -8,12 +8,14 @@ class AssignmentSettingsCreateRequest {
   final int turnDurationInDays;
   final DateTime startDateAndTime;
   final int groupSize;
+  final bool createGroups;
 
   AssignmentSettingsCreateRequest({
     required this.isRepeatingTheEntireCycle,
     required this.turnDurationInDays,
     required this.startDateAndTime,
     required this.groupSize,
+    required this.createGroups,
   });
 
   factory AssignmentSettingsCreateRequest.fromJson(Map<String, dynamic> json) =>

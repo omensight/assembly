@@ -69,7 +69,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final group = assignmentGroups[index];
                       return ListTile(
-                        title: Text(group.assignment),
+                        title: Text(group.assignmentId),
                         subtitle: Text('Created at: ${group.createdAt}'),
                       );
                     },

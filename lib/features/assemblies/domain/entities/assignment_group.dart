@@ -5,13 +5,13 @@ part 'assignment_group.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AssignmentGroup {
   final String id;
-  final String assignment;
+  final String assignmentId;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   AssignmentGroup({
     required this.id,
-    required this.assignment,
+    required this.assignmentId,
     required this.createdAt,
     required this.updatedAt,
   });

@@ -46,6 +46,7 @@ class CreateAssignmentSettingsUsecase
         turnDurationInDays: params.turnDurationInDays,
         startDateAndTime: params.startDateAndTime,
         groupSize: params.groupSize,
+        createGroups: true,
       );
 
       return _repository.createAssignmentSettings(
