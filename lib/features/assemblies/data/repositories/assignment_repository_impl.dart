@@ -28,6 +28,8 @@ abstract class AssignmentRemoteDataSource {
     String assemblyId,
     String assignmentId,
   );
+
+  Future<List<Assignment>> getAssemblyAssignments(String assemblyId);
 }
 
 class AssignmentRepositoryImpl implements AssignmentRepository {
@@ -84,5 +86,10 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
       assemblyId,
       assignmentId,
     );
+  }
+
+  @override
+  Future<List<Assignment>> getAssemblyAssignments(String assemblyId) {
+    return _assignmentRemoteDataSource.getAssemblyAssignments(assemblyId);
   }
 }

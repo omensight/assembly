@@ -55,4 +55,10 @@ abstract class AssignmentRemoteDataSourceImpl
     @Path('assemblyId') String assemblyId,
     @Path('assignmentId') String assignmentId,
   );
+
+  @GET('/assemblies/{assemblyId}/assignments/')
+  @override
+  Future<List<Assignment>> getAssemblyAssignments(
+    @Path('assemblyId') String assemblyId,
+  );
 }

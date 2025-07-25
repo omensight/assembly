@@ -1,7 +1,11 @@
+import 'package:assembly/core/constants.dart';
 import 'package:assembly/core/widgets/standar_paddings.dart';
+import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_icon_button.dart';
+import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/assignments/assembly_assignments_list_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/single_assembly_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
@@ -21,6 +25,10 @@ class AssemblyDetailPage extends ConsumerWidget {
     );
     final currentAssemblyRole = ref.watch(
       currentAssemblyMemberRoleProvider(assemblyId),
+    );
+
+    final assignmentsListAsync = ref.watch(
+      assemblyAssignmentsListControllerProvider(assemblyId),
     );
     return Scaffold(
       appBar: AppBar(
@@ -69,12 +77,63 @@ class AssemblyDetailPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: standardHorizontalPadding,
-        child: Center(
-          child: StandardEmptyView(
-            message: LocaleKeys.noEventsYet.tr(),
-            title: LocaleKeys.noEventsYetTitle.tr(),
-            imagePath: 'assets/empty_views/im_ev_no_events.png',
-          ),
+        child: assignmentsListAsync.when(
+          data:
+              (assignments) =>
+                  assignments.isEmpty
+                      ? Center(
+                        child: StandardEmptyView(
+                          title:
+                              LocaleKeys.noEventsOrAssignemntsAvailableTitle
+                                  .tr(),
+                          message:
+                              LocaleKeys.noEventsOrAssignemntsAvailableMessage
+                                  .tr(),
+                          imagePath: 'assets/empty_views/im_ev_no_events.png',
+                        ),
+                      )
+                      : ListView.separated(
+                        itemBuilder: (context, index) {
+                          final currentItem = assignments[index];
+                          return StandardContainer(
+                            onTap: () {
+                              AssignmentDetailRoute(
+                                assemblyId: assemblyId,
+                                assignmentId: currentItem.id,
+                              ).push(context);
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      currentItem.name,
+                                      style:
+                                          Theme.of(
+                                            context,
+                                          ).textTheme.titleMedium,
+                                    ),
+                                    Text(
+                                      kStandardDateAndTimeFormat.format(
+                                        currentItem.createdAt,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(currentItem.description),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder:
+                            (context, index) => StandardSpace.vertical(),
+                        itemCount: assignments.length,
+                      ),
+          error: (error, stackTrace) => Center(child: Text(error as String)),
+          loading: () => Center(child: CircularProgressIndicator()),
         ),
       ),
     );

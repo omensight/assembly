@@ -27,4 +27,6 @@ abstract class AssignmentRepository {
     String assemblyId,
     String assignmentId,
   );
+
+  Future<List<Assignment>> getAssemblyAssignments(String assemblyId);
 }
