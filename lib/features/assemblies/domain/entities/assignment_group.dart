@@ -1,3 +1,4 @@
+import 'package:assembly/features/assemblies/domain/entities/assignment_group_assignee.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'assignment_group.g.dart';
@@ -8,12 +9,14 @@ class AssignmentGroup {
   final String assignmentId;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final List<AssignmentGroupAssignee> assignees;
 
   AssignmentGroup({
     required this.id,
     required this.assignmentId,
     required this.createdAt,
     required this.updatedAt,
+    required this.assignees,
   });
 
   factory AssignmentGroup.fromJson(Map<String, dynamic> json) =>

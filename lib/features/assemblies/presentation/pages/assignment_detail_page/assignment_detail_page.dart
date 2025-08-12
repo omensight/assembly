@@ -1,5 +1,8 @@
+import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_button.dart';
+import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
+import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_settings_controller.dart';
@@ -9,6 +12,7 @@ import 'package:assembly/features/assemblies/routes.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AssignmentDetailPage extends ConsumerWidget {
@@ -55,28 +59,79 @@ class AssignmentDetailPage extends ConsumerWidget {
               assignmentId: assignmentId,
             );
           }
-          return assignmentGroupsAsync.when(
-            data: (assignmentGroups) {
-              return assignmentGroups.isEmpty
-                  ? Center(
-                    child: AssignmentGroupsEmptyStateView(
-                      assemblyId: assemblyId,
-                      assignmentId: assignmentId,
-                    ),
-                  )
-                  : ListView.builder(
-                    itemCount: assignmentGroups.length,
-                    itemBuilder: (context, index) {
-                      final group = assignmentGroups[index];
-                      return ListTile(
-                        title: Text(group.assignmentId),
-                        subtitle: Text('Created at: ${group.createdAt}'),
-                      );
-                    },
-                  );
-            },
-            error: (error, stackTrace) => Center(child: Text(error as String)),
-            loading: () => const Center(child: CircularProgressIndicator()),
+          return Padding(
+            padding: standardHorizontalPadding,
+            child: assignmentGroupsAsync.when(
+              data: (assignmentGroups) {
+                return assignmentGroups.isEmpty
+                    ? Center(
+                      child: AssignmentGroupsEmptyStateView(
+                        assemblyId: assemblyId,
+                        assignmentId: assignmentId,
+                      ),
+                    )
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          settings.groupSize == 1
+                              ? LocaleKeys.assignees.tr()
+                              : LocaleKeys.assigneeGroups.tr(),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const StandardSpace.vertical(),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: assignmentGroups.length,
+                            itemBuilder: (context, index) {
+                              final group = assignmentGroups[index];
+                              return StandardContainer(
+                                backgroundColor:
+                                    index.isOdd
+                                        ? Theme.of(context).colorScheme.surface
+                                        : Theme.of(
+                                          context,
+                                        ).colorScheme.surfaceContainer,
+                                forceBorderDrawing: true,
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      children:
+                                          group.assignees
+                                              .mapWithIndex(
+                                                (e, i) => Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      e
+                                                          .assemblyMember
+                                                          .user
+                                                          .fullName,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                              .toList(),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+              },
+              error:
+                  (error, stackTrace) => Center(child: Text(error as String)),
+              loading: () => const Center(child: CircularProgressIndicator()),
+            ),
           );
         },
         error:

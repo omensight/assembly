@@ -106,5 +106,7 @@
     "noGroupsFoundDescriptionForAdmin": "There are no groups available at this time. You need to create them in order to start the cycle of this assignment.",
     "noGroupsFoundDescriptionForMember": "There are no groups available at this time. Please contact an administrator.",
     "createGroups": "Create Groups",
-    "failureLoadingAssemblyAssigments": "There was a problem loading the assembly assignments"
+    "failureLoadingAssemblyAssigments": "There was a problem loading the assembly assignments",
+    "assigneeGroups": "Assignee Groups",
+    "assignees": "Assignees"
 }
