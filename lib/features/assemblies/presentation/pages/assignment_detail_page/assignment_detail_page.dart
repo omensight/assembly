@@ -4,9 +4,7 @@ import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
-import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_controller.dart';
-import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_settings_controller.dart';
-import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignments_list_controller.dart';
+import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_detail_provider.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
@@ -26,44 +24,34 @@ class AssignmentDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final assignmentAsync = ref.watch(
-      assignmentControllerProvider(assemblyId, assignmentId),
-    );
-
-    final assignmentSettingsAsync = ref.watch(
-      assignmentSettingsControllerProvider(assemblyId, assignmentId),
-    );
-
-    final assignmentGroupsAsync = ref.watch(
-      assignmentsListControllerProvider(assemblyId, assignmentId),
-    );
-
-    final assemblyMemberRole = ref.watch(
-      currentAssemblyMemberRoleProvider(assemblyId),
+    final assignmentDetailDtoAsync = ref.watch(
+      assignmentDetailDTOProvider(assemblyId, assignmentId),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: assignmentAsync.when(
-          data: (assignment) => Text(assignment.name),
+        title: assignmentDetailDtoAsync.when(
+          data:
+              (assignmentDetailDto) =>
+                  Text(assignmentDetailDto.assignment.name),
           error: (_, _) => Text(LocaleKeys.assignment.tr()),
           loading: () => Text(LocaleKeys.assignment.tr()),
         ),
       ),
-      body: assignmentSettingsAsync.when(
-        data: (settings) {
-          if (settings == null) {
+      body: assignmentDetailDtoAsync.when(
+        data: (assignmentDetailDto) {
+          if (assignmentDetailDto.assignmentSettings == null) {
             return NoAssignmentSettingsEmptyStateView(
-              assemblyMemberRole: assemblyMemberRole,
+              assemblyMemberRole: assignmentDetailDto.assemblyMemberRole,
               assemblyId: assemblyId,
               assignmentId: assignmentId,
             );
           }
+          final assignmentGroups = assignmentDetailDto.assignmentGroups;
           return Padding(
             padding: standardHorizontalPadding,
-            child: assignmentGroupsAsync.when(
-              data: (assignmentGroups) {
-                return assignmentGroups.isEmpty
+            child:
+                assignmentGroups.isEmpty
                     ? Center(
                       child: AssignmentGroupsEmptyStateView(
                         assemblyId: assemblyId,
@@ -74,7 +62,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          settings.groupSize == 1
+                          assignmentDetailDto.assignmentSettings?.groupSize == 1
                               ? LocaleKeys.assignees.tr()
                               : LocaleKeys.assigneeGroups.tr(),
                           style: Theme.of(context).textTheme.titleMedium,
@@ -87,16 +75,43 @@ class AssignmentDetailPage extends ConsumerWidget {
                               final group = assignmentGroups[index];
                               return StandardContainer(
                                 backgroundColor:
-                                    index.isOdd
-                                        ? Theme.of(context).colorScheme.surface
+                                    assignmentDetailDto
+                                                .assignment
+                                                .activeGroupId ==
+                                            group.id
+                                        ? Theme.of(
+                                          context,
+                                        ).colorScheme.primaryContainer
                                         : Theme.of(
                                           context,
-                                        ).colorScheme.surfaceContainer,
+                                        ).colorScheme.surfaceContainerLow,
                                 forceBorderDrawing: true,
                                 padding: EdgeInsets.all(8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    if (assignmentDetailDto
+                                            .assignment
+                                            .activeGroupId ==
+                                        group.id)
+                                      Text(
+                                        assignmentDetailDto
+                                                    .assignmentSettings
+                                                    ?.groupSize ==
+                                                1
+                                            ? LocaleKeys.currentlyAssignedMember
+                                                .tr()
+                                            : LocaleKeys.currentlyAssignedGroup
+                                                .tr(),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleMedium?.copyWith(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.primary,
+                                        ),
+                                      ),
                                     ListView(
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -126,12 +141,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                           ),
                         ),
                       ],
-                    );
-              },
-              error:
-                  (error, stackTrace) => Center(child: Text(error as String)),
-              loading: () => const Center(child: CircularProgressIndicator()),
-            ),
+                    ),
           );
         },
         error:

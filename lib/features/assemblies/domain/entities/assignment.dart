@@ -16,6 +16,9 @@ class Assignment {
   @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
+  @JsonKey(name: 'active_group_id')
+  final String? activeGroupId;
+
   Assignment({
     required this.id,
     required this.name,
@@ -24,6 +27,7 @@ class Assignment {
     required this.memberIssuerId,
     required this.createdAt,
     required this.updatedAt,
+    this.activeGroupId,
   });
 
   factory Assignment.fromJson(Map<String, dynamic> json) =>

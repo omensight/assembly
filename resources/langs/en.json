@@ -108,5 +108,7 @@
     "createGroups": "Create Groups",
     "failureLoadingAssemblyAssigments": "There was a problem loading the assembly assignments",
     "assigneeGroups": "Assignee Groups",
-    "assignees": "Assignees"
+    "assignees": "Assignees",
+    "currentlyAssignedGroup": "Currently assigned group",
+    "currentlyAssignedMember": "Currently assigned Member"
 }
