@@ -1,14 +1,11 @@
 import 'package:assembly/core/constants.dart';
 import 'package:assembly/core/widgets/standar_paddings.dart';
-import 'package:assembly/core/widgets/standard_button.dart';
 import 'package:assembly/core/widgets/standard_container.dart';
-import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
-import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
-import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_detail_provider.dart';
-import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
-import 'package:assembly/features/assemblies/routes.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_detail_page.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_groups_empty_state_view.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/mark_assignment_group_as_completed_widget.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -160,157 +157,6 @@ class AssignmentDetailPage extends ConsumerWidget {
               child: Text(LocaleKeys.failureLoadingAssignmentSettings.tr()),
             ),
         loading: () => const Center(child: CircularProgressIndicator()),
-      ),
-    );
-  }
-}
-
-class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
-  const MarkAssignmentGroupAsCompletedWidget({
-    super.key,
-    required this.assignmentGroup,
-    required this.assemblyId,
-  });
-
-  final String assemblyId;
-  final AssignmentGroup assignmentGroup;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final completion = assignmentGroup.completion;
-    final isMarkedAsCompleted = completion != null;
-    final isConfirmed = completion?.isConfirmed ?? false;
-
-    if (isMarkedAsCompleted && isConfirmed) {
-      return Text(
-        LocaleKeys.assingnmentCompleted.tr(),
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    }
-
-    if (isMarkedAsCompleted && !isConfirmed) {
-      return Text(
-        LocaleKeys.awaitingConfirmation.tr(),
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: Colors.deepOrange),
-      );
-    }
-
-    final markAsCompletionStatus = ref.watch(
-      markAssignmentGroupCompletedControllerProvider(
-        assemblyId: assemblyId,
-        assignmentGroupId: assignmentGroup.id,
-        assignmentId: assignmentGroup.assignmentId,
-      ),
-    );
-
-    return StandardButton(
-      buttonState:
-          markAsCompletionStatus.isLoading
-              ? StandardButtonState.loading
-              : StandardButtonState.standBy,
-      text: LocaleKeys.markAsCompleted.tr(),
-      onPressed: () {
-        ref
-            .read(
-              markAssignmentGroupCompletedControllerProvider(
-                assemblyId: assemblyId,
-                assignmentGroupId: assignmentGroup.id,
-                assignmentId: assignmentGroup.assignmentId,
-              ).notifier,
-            )
-            .markGroupAsCompleted();
-      },
-      isBackgroundColored: true,
-    );
-  }
-}
-
-class AssignmentGroupsEmptyStateView extends ConsumerWidget {
-  final String assemblyId;
-  final String assignmentId;
-
-  const AssignmentGroupsEmptyStateView({
-    super.key,
-    required this.assemblyId,
-    required this.assignmentId,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentAssemblyRole = ref.watch(
-      currentAssemblyMemberRoleProvider(assemblyId),
-    );
-    return [AssemblyMemberRole.admin].contains(currentAssemblyRole)
-        ? StandardEmptyView(
-          title: LocaleKeys.noGroupsFoundTitle.tr(),
-          imagePath: 'assets/empty_views/im_ev_no_events.png',
-          message: switch (currentAssemblyRole) {
-            AssemblyMemberRole.admin =>
-              LocaleKeys.noGroupsFoundDescriptionForAdmin.tr(),
-            AssemblyMemberRole.member =>
-              LocaleKeys.noGroupsFoundDescriptionForMember.tr(),
-          },
-          actionButton:
-              currentAssemblyRole == AssemblyMemberRole.admin
-                  ? StandardButton(
-                    text: LocaleKeys.createGroups.tr(),
-                    isBackgroundColored: true,
-                    onPressed: () {
-                      CreateAssignmentSettingsRoute(
-                        assemblyId: assemblyId,
-                        assignmentId: assignmentId,
-                      ).go(context);
-                    },
-                  )
-                  : null,
-        )
-        : StandardEmptyView(
-          imagePath: 'assets/empty_views/im_ev_no_events.png',
-          message: LocaleKeys.messageAssignmentNotInitialized.tr(),
-        );
-  }
-}
-
-class NoAssignmentSettingsEmptyStateView extends StatelessWidget {
-  const NoAssignmentSettingsEmptyStateView({
-    super.key,
-    required this.assemblyMemberRole,
-    required this.assemblyId,
-    required this.assignmentId,
-  });
-
-  final AssemblyMemberRole assemblyMemberRole;
-  final String assemblyId;
-  final String assignmentId;
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: StandardEmptyView(
-        message: switch (assemblyMemberRole) {
-          AssemblyMemberRole.admin =>
-            LocaleKeys.thisAssignmentHasNotBeenConfiguredYetForAdmin.tr(),
-          AssemblyMemberRole.member =>
-            LocaleKeys.thisAssignmentHasNotBeenConfiguredYetForMember.tr(),
-        },
-        title: LocaleKeys.titleAssignmentNotConfigured.tr(),
-        actionButton: switch (assemblyMemberRole) {
-          AssemblyMemberRole.admin => StandardButton(
-            text: LocaleKeys.configureAssignment.tr(),
-            isBackgroundColored: true,
-            onPressed: () {
-              CreateAssignmentSettingsRoute(
-                assemblyId: assemblyId,
-                assignmentId: assignmentId,
-              ).push(context);
-            },
-          ),
-          AssemblyMemberRole.member => null,
-        },
-        imagePath: 'assets/empty_views/im_ev_no_assembly_settings.png',
       ),
     );
   }
