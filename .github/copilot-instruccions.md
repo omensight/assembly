@@ -82,6 +82,8 @@ lib
         ├── routes.dart
         └── routes.g.dart
 
+Keep in mind that this structure is a guideline and can be adjusted based on the specific needs of your project. The key is to maintain a clear separation of concerns and ensure that each layer has a well-defined role in the application architecture.
+
 # Usecases 
 Use cases are the core of the domain layer, encapsulating the business logic of the application. Each use case should be defined in its own file and should be named according to the functionality it provides. Use cases should interact with repositories to perform operations and return results.
 Use cases should be organized into directories based on their functionality, and each directory should contain the relevant use cases for that functionality. For example, if you have a functionality related to managing assignments, you might have a directory named `assemblies` that contains use cases like `get_assemblies_usecase.dart`, `update_assembly_join_request_usecase.dart`, and `delete_assembly_join_request_usecase.dart`.
@@ -127,3 +129,9 @@ class NetworkFailure extends GetAssemblyJoinRequestsFailure {}
 The previous useacase is an example of how to implement a use case in the domain layer. It defines a use case for getting assembly join requests, implements the `UseCase` interface, and provides a method to execute the use case logic.
 
 The Usecase interface is located at /lib/core/usecase.dart and should be implemented by all use cases in the domain layer. It provides a base structure for use cases, allowing them to be executed with specific parameters and return results.
+
+# Code generation
+The code generation has to be done using the `build_runner` with the same command:
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```

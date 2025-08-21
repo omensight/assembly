@@ -21,6 +21,7 @@ import 'package:assembly/features/assemblies/domain/usecases/update_assembly_use
 import 'package:assembly/features/assemblies/presentation/providers/repository_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:assembly/features/assemblies/domain/usecases/assignments/confirm_assignment_group_completion_usecase.dart';
 part 'usecase_providers.g.dart';
 
 @riverpod
@@ -172,3 +173,10 @@ MarkAssignmentGroupCompletedUsecase markAssignmentGroupCompletedUsecase(
     repository: ref.watch(assignmentRepositoryProvider),
   );
 }
+
+final confirmAssignmentGroupCompletionUsecaseProvider =
+    Provider<ConfirmAssignmentGroupCompletionUsecase>((ref) {
+      return ConfirmAssignmentGroupCompletionUsecase(
+        repository: ref.watch(assignmentRepositoryProvider),
+      );
+    });

@@ -37,6 +37,12 @@ abstract class AssignmentRemoteDataSource {
     required String assignmentId,
     required String assignmentGroupId,
   });
+
+  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  });
 }
 
 class AssignmentRepositoryImpl implements AssignmentRepository {
@@ -107,6 +113,19 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
     required String assignmentGroupId,
   }) {
     return _assignmentRemoteDataSource.markAssignmentGroupAsCompleted(
+      assemblyId: assemblyId,
+      assignmentId: assignmentId,
+      assignmentGroupId: assignmentGroupId,
+    );
+  }
+
+  @override
+  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  }) {
+    return _assignmentRemoteDataSource.confirmAssignmentGroupCompletion(
       assemblyId: assemblyId,
       assignmentId: assignmentId,
       assignmentGroupId: assignmentGroupId,

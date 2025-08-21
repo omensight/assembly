@@ -36,4 +36,10 @@ abstract class AssignmentRepository {
     required String assignmentId,
     required String assignmentGroupId,
   });
+
+  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  });
 }

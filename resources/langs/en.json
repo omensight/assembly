@@ -113,5 +113,8 @@
     "currentlyAssignedMember": "Currently assigned Member",
     "assingnmentCompleted": "Assignment completed",
     "awaitingConfirmation": "Awaiting confirmation",
-    "markAsCompleted": "Mark as completed"
+    "markAsCompleted": "Mark as completed",
+    "confirm": "Confirm",
+    "assignmentGroupCompletionConfirmed": "Assignment group confirmed",
+    "failureConfirmingAssignmentGroupCompletion": "There was a problem confirming this assignment group"
 }

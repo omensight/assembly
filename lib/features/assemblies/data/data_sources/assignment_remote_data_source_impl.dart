@@ -72,4 +72,14 @@ abstract class AssignmentRemoteDataSourceImpl
     @Path('assignmentId') required String assignmentId,
     @Path('assignmentGroupId') required String assignmentGroupId,
   });
+
+  @POST(
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/assignment_groups/{assignmentGroupId}/confirm-assignment-group-completion/',
+  )
+  @override
+  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+    @Path('assemblyId') required String assemblyId,
+    @Path('assignmentId') required String assignmentId,
+    @Path('assignmentGroupId') required String assignmentGroupId,
+  });
 }
