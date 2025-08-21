@@ -12,6 +12,7 @@ class StandardContainer extends StatelessWidget {
     this.isExpanded = true,
     this.borderColor,
     this.forceBorderDrawing = false,
+    this.borderRadius,
   });
   final Widget child;
   final void Function()? onTap;
@@ -20,20 +21,25 @@ class StandardContainer extends StatelessWidget {
   final EdgeInsets? padding;
   final bool isExpanded;
   final bool forceBorderDrawing;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: isExpanded ? double.infinity : null,
       child: Material(
-        borderRadius: BorderRadius.circular(kStandardBorderRadius),
+        borderRadius: BorderRadius.circular(
+          borderRadius ?? kStandardBorderRadius,
+        ),
         color:
             backgroundColor ??
             Theme.of(
               context,
             ).colorScheme.primaryContainer.withValues(alpha: .11),
         child: InkWell(
-          borderRadius: BorderRadius.circular(kStandardBorderRadius),
+          borderRadius: BorderRadius.circular(
+            borderRadius ?? kStandardBorderRadius,
+          ),
           onTap: onTap,
           child: Container(
             padding: padding ?? standardPadding,
@@ -48,7 +54,9 @@ class StandardContainer extends StatelessWidget {
                             ).primaryColor.withValues(alpha: .33),
                       )
                       : null,
-              borderRadius: BorderRadius.circular(kStandardBorderRadius),
+              borderRadius: BorderRadius.circular(
+                borderRadius ?? kStandardBorderRadius,
+              ),
               color: Colors.transparent,
             ),
             child: child,

@@ -1,3 +1,4 @@
+import 'package:assembly/core/constants.dart';
 import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_button.dart';
 import 'package:assembly/core/widgets/standard_container.dart';
@@ -70,7 +71,10 @@ class AssignmentDetailPage extends ConsumerWidget {
                         ),
                         const StandardSpace.vertical(),
                         Expanded(
-                          child: ListView.builder(
+                          child: ListView.separated(
+                            separatorBuilder:
+                                (context, index) =>
+                                    const StandardSpace.vertical(),
                             itemCount: assignmentGroups.length,
                             itemBuilder: (context, index) {
                               final group = assignmentGroups[index];
@@ -81,6 +85,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                                   group.id;
 
                               return StandardContainer(
+                                borderRadius: kStandardMinimalRadius,
                                 backgroundColor:
                                     assignmentDetailDto
                                                 .assignment
