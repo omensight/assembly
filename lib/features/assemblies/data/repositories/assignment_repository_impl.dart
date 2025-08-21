@@ -4,6 +4,7 @@ import 'package:assembly/features/assemblies/domain/entities/assignment_settings
 import 'package:assembly/features/assemblies/domain/models/assignment_create_request.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_settings_create_request.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assignment_repository.dart';
+import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 
 abstract class AssignmentRemoteDataSource {
   Future<Assignment> createAssignment(
@@ -30,6 +31,12 @@ abstract class AssignmentRemoteDataSource {
   );
 
   Future<List<Assignment>> getAssemblyAssignments(String assemblyId);
+
+  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  });
 }
 
 class AssignmentRepositoryImpl implements AssignmentRepository {
@@ -91,5 +98,18 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
   @override
   Future<List<Assignment>> getAssemblyAssignments(String assemblyId) {
     return _assignmentRemoteDataSource.getAssemblyAssignments(assemblyId);
+  }
+
+  @override
+  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  }) {
+    return _assignmentRemoteDataSource.markAssignmentGroupAsCompleted(
+      assemblyId: assemblyId,
+      assignmentId: assignmentId,
+      assignmentGroupId: assignmentGroupId,
+    );
   }
 }

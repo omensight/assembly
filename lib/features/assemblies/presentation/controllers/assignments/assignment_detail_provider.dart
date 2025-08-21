@@ -1,22 +1,25 @@
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment.dart';
+import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_settings.dart';
+import 'package:assembly/features/assemblies/domain/usecases/assignments/mark_assignment_group_completed_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_settings_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignments_list_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
+import 'package:assembly/features/assemblies/presentation/providers/usecase_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_detail_provider.g.dart';
 
-class AssigmentDetailDTO {
+class AssignmentDetailDTO {
   final Assignment assignment;
   final AssignmentSettings? assignmentSettings;
   final List<AssignmentGroup> assignmentGroups;
   final AssemblyMemberRole assemblyMemberRole;
-  AssigmentDetailDTO({
+  AssignmentDetailDTO({
     required this.assignment,
     required this.assignmentSettings,
     required this.assignmentGroups,
@@ -25,7 +28,7 @@ class AssigmentDetailDTO {
 }
 
 @riverpod
-FutureOr<AssigmentDetailDTO> assignmentDetailDTO(
+FutureOr<AssignmentDetailDTO> assignmentDetailDTO(
   Ref ref,
   String assemblyId,
   String assignmentId,
@@ -46,10 +49,42 @@ FutureOr<AssigmentDetailDTO> assignmentDetailDTO(
     currentAssemblyMemberRoleProvider(assemblyId),
   );
 
-  return AssigmentDetailDTO(
+  return AssignmentDetailDTO(
     assignment: assignmentAsync,
     assignmentSettings: assignmentSettingsAsync,
     assignmentGroups: assignmentGroupsAsync,
     assemblyMemberRole: assemblyMemberRole,
   );
+}
+
+@riverpod
+class MarkAssignmentGroupCompletedController
+    extends _$MarkAssignmentGroupCompletedController {
+  @override
+  FutureOr<AssignmentCompletion?> build({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  }) async {
+    return null;
+  }
+
+  Future<void> markGroupAsCompleted() async {
+    state = const AsyncLoading();
+    final result =
+        await ref
+            .read(markAssignmentGroupCompletedUsecaseProvider)
+            .build(
+              MarkAssignmentGroupCompletedParams(
+                assemblyId: assemblyId,
+                assignmentId: assignmentId,
+                assignmentGroupId: assignmentGroupId,
+              ),
+            )
+            .run();
+    state = result.fold(
+      (l) => AsyncError(l, StackTrace.current),
+      (r) => AsyncData(r),
+    );
+  }
 }

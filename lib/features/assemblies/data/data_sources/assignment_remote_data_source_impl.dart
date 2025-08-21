@@ -2,6 +2,7 @@ import 'package:assembly/features/assemblies/data/repositories/assignment_reposi
 import 'package:assembly/features/assemblies/domain/entities/assignment.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_settings.dart';
+import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_create_request.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_settings_create_request.dart';
 import 'package:dio/dio.dart';
@@ -61,4 +62,14 @@ abstract class AssignmentRemoteDataSourceImpl
   Future<List<Assignment>> getAssemblyAssignments(
     @Path('assemblyId') String assemblyId,
   );
+
+  @POST(
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/assignment_groups/{assignmentGroupId}/mark-as-completed/',
+  )
+  @override
+  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+    @Path('assemblyId') required String assemblyId,
+    @Path('assignmentId') required String assignmentId,
+    @Path('assignmentGroupId') required String assignmentGroupId,
+  });
 }

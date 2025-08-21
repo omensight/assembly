@@ -3,6 +3,7 @@ import 'package:assembly/features/assemblies/domain/entities/assignment_group.da
 import 'package:assembly/features/assemblies/domain/entities/assignment_settings.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_create_request.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_settings_create_request.dart';
+import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 
 abstract class AssignmentRepository {
   Future<Assignment> createAssignment({
@@ -29,4 +30,10 @@ abstract class AssignmentRepository {
   );
 
   Future<List<Assignment>> getAssemblyAssignments(String assemblyId);
+
+  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+    required String assemblyId,
+    required String assignmentId,
+    required String assignmentGroupId,
+  });
 }

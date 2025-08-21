@@ -110,5 +110,8 @@
     "assigneeGroups": "Assignee Groups",
     "assignees": "Assignees",
     "currentlyAssignedGroup": "Currently assigned group",
-    "currentlyAssignedMember": "Currently assigned Member"
+    "currentlyAssignedMember": "Currently assigned Member",
+    "assingnmentCompleted": "Assignment completed",
+    "awaitingConfirmation": "Awaiting confirmation",
+    "markAsCompleted": "Mark as completed"
 }

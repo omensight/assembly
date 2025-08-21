@@ -4,6 +4,7 @@ import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_empty_view.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
+import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_detail_provider.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/routes.dart';
@@ -73,6 +74,12 @@ class AssignmentDetailPage extends ConsumerWidget {
                             itemCount: assignmentGroups.length,
                             itemBuilder: (context, index) {
                               final group = assignmentGroups[index];
+                              final isMarkStatusVisible =
+                                  assignmentDetailDto
+                                      .assignment
+                                      .activeGroupId ==
+                                  group.id;
+
                               return StandardContainer(
                                 backgroundColor:
                                     assignmentDetailDto
@@ -112,6 +119,11 @@ class AssignmentDetailPage extends ConsumerWidget {
                                               ).colorScheme.primary,
                                         ),
                                       ),
+                                    if (isMarkStatusVisible)
+                                      MarkAssignmentGroupAsCompletedWidget(
+                                        assignmentGroup: group,
+                                        assemblyId: assemblyId,
+                                      ),
                                     ListView(
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -119,17 +131,11 @@ class AssignmentDetailPage extends ConsumerWidget {
                                       children:
                                           group.assignees
                                               .mapWithIndex(
-                                                (e, i) => Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      e
-                                                          .assemblyMember
-                                                          .user
-                                                          .fullName,
-                                                    ),
-                                                  ],
+                                                (e, i) => Text(
+                                                  e
+                                                      .assemblyMember
+                                                      .user
+                                                      .fullName,
                                                 ),
                                               )
                                               .toList(),
@@ -150,6 +156,70 @@ class AssignmentDetailPage extends ConsumerWidget {
             ),
         loading: () => const Center(child: CircularProgressIndicator()),
       ),
+    );
+  }
+}
+
+class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
+  const MarkAssignmentGroupAsCompletedWidget({
+    super.key,
+    required this.assignmentGroup,
+    required this.assemblyId,
+  });
+
+  final String assemblyId;
+  final AssignmentGroup assignmentGroup;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final completion = assignmentGroup.completion;
+    final isMarkedAsCompleted = completion != null;
+    final isConfirmed = completion?.isConfirmed ?? false;
+
+    if (isMarkedAsCompleted && isConfirmed) {
+      return Text(
+        LocaleKeys.assingnmentCompleted.tr(),
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      );
+    }
+
+    if (isMarkedAsCompleted && !isConfirmed) {
+      return Text(
+        LocaleKeys.awaitingConfirmation.tr(),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: Colors.deepOrange),
+      );
+    }
+
+    final markAsCompletionStatus = ref.watch(
+      markAssignmentGroupCompletedControllerProvider(
+        assemblyId: assemblyId,
+        assignmentGroupId: assignmentGroup.id,
+        assignmentId: assignmentGroup.assignmentId,
+      ),
+    );
+
+    return StandardButton(
+      buttonState:
+          markAsCompletionStatus.isLoading
+              ? StandardButtonState.loading
+              : StandardButtonState.standBy,
+      text: LocaleKeys.markAsCompleted.tr(),
+      onPressed: () {
+        ref
+            .read(
+              markAssignmentGroupCompletedControllerProvider(
+                assemblyId: assemblyId,
+                assignmentGroupId: assignmentGroup.id,
+                assignmentId: assignmentGroup.assignmentId,
+              ).notifier,
+            )
+            .markGroupAsCompleted();
+      },
+      isBackgroundColored: true,
     );
   }
 }
