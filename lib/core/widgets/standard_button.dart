@@ -9,6 +9,7 @@ class StandardButton extends StatelessWidget {
     this.onPressed,
     this.customBackgroundColor,
     this.isBackgroundColored = false,
+    this.icon,
   });
 
   final String text;
@@ -16,6 +17,7 @@ class StandardButton extends StatelessWidget {
   final void Function()? onPressed;
   final Color? customBackgroundColor;
   final bool isBackgroundColored;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,15 @@ class StandardButton extends StatelessWidget {
                         ? Colors.white
                         : Theme.of(context).colorScheme.primary,
               ),
+            ),
+            StandardSpace.horizontal(),
+          ] else if (icon != null) ...[
+            Icon(
+              icon,
+              color:
+                  isBackgroundColored
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.primary,
             ),
             StandardSpace.horizontal(),
           ],

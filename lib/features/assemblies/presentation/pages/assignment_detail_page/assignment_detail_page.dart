@@ -5,7 +5,7 @@ import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_detail_provider.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_groups_empty_state_view.dart';
-import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/mark_assignment_group_as_completed_widget.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_status_widget.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -75,75 +75,119 @@ class AssignmentDetailPage extends ConsumerWidget {
                             itemCount: assignmentGroups.length,
                             itemBuilder: (context, index) {
                               final group = assignmentGroups[index];
-                              final isMarkStatusVisible =
-                                  assignmentDetailDto
-                                      .assignment
-                                      .activeGroupId ==
-                                  group.id;
 
-                              return StandardContainer(
-                                borderRadius: kStandardMinimalRadius,
-                                backgroundColor:
-                                    assignmentDetailDto
+                              return Column(
+                                children: [
+                                  StandardContainer(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(
+                                        kStandardMinimalBorderRadius,
+                                      ),
+                                      topRight: Radius.circular(
+                                        kStandardMinimalBorderRadius,
+                                      ),
+                                    ),
+
+                                    border: Border(
+                                      top: BorderSide(color: Colors.blue),
+                                      left: BorderSide(color: Colors.blue),
+                                      right: BorderSide(color: Colors.blue),
+                                    ),
+                                    backgroundColor:
+                                        assignmentDetailDto
+                                                    .assignment
+                                                    .activeGroupId ==
+                                                group.id
+                                            ? Theme.of(
+                                              context,
+                                            ).colorScheme.primaryContainer
+                                            : Theme.of(
+                                              context,
+                                            ).colorScheme.surfaceContainerLow,
+                                    forceBorderDrawing: true,
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (assignmentDetailDto
                                                 .assignment
                                                 .activeGroupId ==
-                                            group.id
-                                        ? Theme.of(
-                                          context,
-                                        ).colorScheme.primaryContainer
-                                        : Theme.of(
-                                          context,
-                                        ).colorScheme.surfaceContainerLow,
-                                forceBorderDrawing: true,
-                                padding: EdgeInsets.all(8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (assignmentDetailDto
-                                            .assignment
-                                            .activeGroupId ==
-                                        group.id)
-                                      Text(
-                                        assignmentDetailDto
-                                                    .assignmentSettings
-                                                    ?.groupSize ==
-                                                1
-                                            ? LocaleKeys.currentlyAssignedMember
-                                                .tr()
-                                            : LocaleKeys.currentlyAssignedGroup
-                                                .tr(),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.titleMedium?.copyWith(
-                                          color:
-                                              Theme.of(
-                                                context,
-                                              ).colorScheme.primary,
+                                            group.id)
+                                          Text(
+                                            assignmentDetailDto
+                                                        .assignmentSettings
+                                                        ?.groupSize ==
+                                                    1
+                                                ? LocaleKeys
+                                                    .currentlyAssignedMember
+                                                    .tr()
+                                                : LocaleKeys
+                                                    .currentlyAssignedGroup
+                                                    .tr(),
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleMedium?.copyWith(
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
+                                            ),
+                                          ),
+
+                                        ListView(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          children:
+                                              group.assignees
+                                                  .mapWithIndex(
+                                                    (e, i) => Text(
+                                                      e
+                                                          .assemblyMember
+                                                          .user
+                                                          .fullName,
+                                                    ),
+                                                  )
+                                                  .toList(),
                                         ),
-                                      ),
-                                    if (isMarkStatusVisible)
-                                      MarkAssignmentGroupAsCompletedWidget(
-                                        assignmentGroup: group,
-                                        assemblyId: assemblyId,
-                                      ),
-                                    ListView(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children:
-                                          group.assignees
-                                              .mapWithIndex(
-                                                (e, i) => Text(
-                                                  e
-                                                      .assemblyMember
-                                                      .user
-                                                      .fullName,
-                                                ),
-                                              )
-                                              .toList(),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  StandardContainer(
+                                    forceBorderDrawing: true,
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withValues(alpha: .55),
+                                    padding: EdgeInsets.all(
+                                      kStandardInnerPadding,
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(
+                                        kStandardMinimalBorderRadius,
+                                      ),
+                                      bottomRight: Radius.circular(
+                                        kStandardMinimalBorderRadius,
+                                      ),
+                                    ),
+                                    borderColor: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withValues(alpha: .55),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: AssignmentStatusWidget(
+                                            assignmentGroup: group,
+                                            assemblyId: assemblyId,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),

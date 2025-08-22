@@ -9,8 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
-  const MarkAssignmentGroupAsCompletedWidget({
+class AssignmentStatusWidget extends ConsumerWidget {
+  const AssignmentStatusWidget({
     super.key,
     required this.assignmentGroup,
     required this.assemblyId,
@@ -27,9 +27,9 @@ class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
 
     if (isMarkedAsCompleted && isConfirmed) {
       return Text(
-        LocaleKeys.assingnmentCompleted.tr(),
+        LocaleKeys.assignmentCompleted.tr(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       );
     }
@@ -77,26 +77,29 @@ class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
           );
         });
 
-        return Row(
+        return Column(
           children: [
-            Expanded(
-              child: Text(
-                LocaleKeys.awaitingConfirmation.tr(),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.deepOrange),
-              ),
+            Text(
+              LocaleKeys.awaitingConfirmation.tr(),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
-            StandardButton(
-              text: LocaleKeys.confirm.tr(),
-              buttonState:
-                  confirmState.isLoading
-                      ? StandardButtonState.loading
-                      : StandardButtonState.standBy,
-              onPressed: () {
-                ref.read(confirmProvider.notifier).confirm();
-              },
-              isBackgroundColored: true,
+            SizedBox(
+              width: double.infinity,
+              child: StandardButton(
+                text: LocaleKeys.confirm.tr(),
+                buttonState:
+                    confirmState.isLoading
+                        ? StandardButtonState.loading
+                        : StandardButtonState.standBy,
+
+                customBackgroundColor: Colors.transparent,
+
+                onPressed: () {
+                  ref.read(confirmProvider.notifier).confirm();
+                },
+              ),
             ),
           ],
         );
@@ -118,11 +121,6 @@ class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
     );
 
     return StandardButton(
-      buttonState:
-          markAsCompletionStatus.isLoading
-              ? StandardButtonState.loading
-              : StandardButtonState.standBy,
-      text: LocaleKeys.markAsCompleted.tr(),
       onPressed: () {
         ref
             .read(
@@ -134,7 +132,13 @@ class MarkAssignmentGroupAsCompletedWidget extends ConsumerWidget {
             )
             .markGroupAsCompleted();
       },
-      isBackgroundColored: true,
+      icon: Icons.check,
+      buttonState:
+          markAsCompletionStatus.isLoading
+              ? StandardButtonState.loading
+              : StandardButtonState.standBy,
+      text: LocaleKeys.markAsCompleted.tr(),
+      customBackgroundColor: Colors.transparent,
     );
   }
 }

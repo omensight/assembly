@@ -13,6 +13,7 @@ class StandardContainer extends StatelessWidget {
     this.borderColor,
     this.forceBorderDrawing = false,
     this.borderRadius,
+    this.border,
   });
   final Widget child;
   final void Function()? onTap;
@@ -21,43 +22,42 @@ class StandardContainer extends StatelessWidget {
   final EdgeInsets? padding;
   final bool isExpanded;
   final bool forceBorderDrawing;
-  final double? borderRadius;
+  final BorderRadius? borderRadius;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: isExpanded ? double.infinity : null,
       child: Material(
-        borderRadius: BorderRadius.circular(
-          borderRadius ?? kStandardBorderRadius,
-        ),
+        borderRadius:
+            borderRadius ?? BorderRadius.circular(kStandardBorderRadius),
         color:
             backgroundColor ??
             Theme.of(
               context,
             ).colorScheme.primaryContainer.withValues(alpha: .11),
         child: InkWell(
-          borderRadius: BorderRadius.circular(
-            borderRadius ?? kStandardBorderRadius,
-          ),
+          borderRadius:
+              borderRadius ?? BorderRadius.circular(kStandardBorderRadius),
           onTap: onTap,
           child: Container(
             padding: padding ?? standardPadding,
             decoration: BoxDecoration(
               border:
-                  forceBorderDrawing || onTap != null
-                      ? Border.all(
-                        color:
-                            borderColor ??
-                            Theme.of(
-                              context,
-                            ).primaryColor.withValues(alpha: .33),
-                      )
+                  forceBorderDrawing || onTap != null || border != null
+                      ? border ??
+                          Border.all(
+                            color:
+                                borderColor ??
+                                Theme.of(
+                                  context,
+                                ).primaryColor.withValues(alpha: .33),
+                          )
                       : null,
-              borderRadius: BorderRadius.circular(
-                borderRadius ?? kStandardBorderRadius,
-              ),
-              color: Colors.transparent,
+              borderRadius:
+                  borderRadius ?? BorderRadius.circular(kStandardBorderRadius),
+              color: backgroundColor,
             ),
             child: child,
           ),
