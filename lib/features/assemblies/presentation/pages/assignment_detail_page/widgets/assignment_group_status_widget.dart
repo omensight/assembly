@@ -9,8 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AssignmentStatusWidget extends ConsumerWidget {
-  const AssignmentStatusWidget({
+class AssignmentGroupStatusWidget extends ConsumerWidget {
+  const AssignmentGroupStatusWidget({
     super.key,
     required this.assignmentGroup,
     required this.assemblyId,
@@ -26,6 +26,10 @@ class AssignmentStatusWidget extends ConsumerWidget {
     final completion = assignmentGroup.completion;
     final isMarkedAsCompleted = completion != null;
     final isConfirmed = completion?.isConfirmed ?? false;
+
+    if (!isMarkedAsCompleted) {
+      return SizedBox.shrink();
+    }
 
     if (isMarkedAsCompleted && isConfirmed) {
       return Text(

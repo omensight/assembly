@@ -1,11 +1,10 @@
-import 'package:assembly/core/constants.dart';
 import 'package:assembly/core/widgets/standar_paddings.dart';
 import 'package:assembly/core/widgets/standard_container.dart';
 import 'package:assembly/core/widgets/standard_space.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignment_detail_provider.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_detail_page.dart';
 import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_groups_empty_state_view.dart';
-import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_status_widget.dart';
+import 'package:assembly/features/assemblies/presentation/pages/assignment_detail_page/widgets/assignment_group_status_widget.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +46,7 @@ class AssignmentDetailPage extends ConsumerWidget {
             );
           }
           final assignmentGroups = assignmentDetailDto.assignmentGroups;
+
           return Padding(
             padding: standardHorizontalPadding,
             child:
@@ -75,39 +75,21 @@ class AssignmentDetailPage extends ConsumerWidget {
                             itemCount: assignmentGroups.length,
                             itemBuilder: (context, index) {
                               final group = assignmentGroups[index];
-
-                              return Column(
-                                children: [
-                                  StandardContainer(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(
-                                        kStandardMinimalBorderRadius,
-                                      ),
-                                      topRight: Radius.circular(
-                                        kStandardMinimalBorderRadius,
-                                      ),
-                                    ),
-
-                                    border: Border(
-                                      top: BorderSide(color: Colors.blue),
-                                      left: BorderSide(color: Colors.blue),
-                                      right: BorderSide(color: Colors.blue),
-                                    ),
-                                    backgroundColor:
-                                        assignmentDetailDto
-                                                    .assignment
-                                                    .activeAssignmentCycle
-                                                    ?.activeGroupId ==
-                                                group.id
-                                            ? Theme.of(
-                                              context,
-                                            ).colorScheme.primaryContainer
-                                            : Theme.of(
-                                              context,
-                                            ).colorScheme.surfaceContainerLow,
-                                    forceBorderDrawing: true,
-                                    padding: EdgeInsets.all(8),
-                                    child: Column(
+                              final isGroupActive =
+                                  assignmentDetailDto
+                                      .assignment
+                                      .activeAssignmentCycle
+                                      ?.activeGroupId ==
+                                  group.id;
+                              return StandardContainer(
+                                forceBorderDrawing: isGroupActive,
+                                borderColor:
+                                    isGroupActive
+                                        ? Theme.of(context).colorScheme.primary
+                                        : null,
+                                child: Column(
+                                  children: [
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -155,29 +137,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  StandardContainer(
-                                    forceBorderDrawing: true,
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withValues(alpha: .55),
-                                    padding: EdgeInsets.all(
-                                      kStandardInnerPadding,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(
-                                        kStandardMinimalBorderRadius,
-                                      ),
-                                      bottomRight: Radius.circular(
-                                        kStandardMinimalBorderRadius,
-                                      ),
-                                    ),
-                                    borderColor: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withValues(alpha: .55),
-                                    child: Column(
+                                    Column(
                                       children: [
                                         if (assignmentDetailDto
                                                 .assignment
@@ -185,7 +145,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                                             null)
                                           SizedBox(
                                             width: double.infinity,
-                                            child: AssignmentStatusWidget(
+                                            child: AssignmentGroupStatusWidget(
                                               assignmentGroup: group,
                                               assemblyId: assemblyId,
                                               cycleId:
@@ -197,8 +157,8 @@ class AssignmentDetailPage extends ConsumerWidget {
                                           ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                           ),
