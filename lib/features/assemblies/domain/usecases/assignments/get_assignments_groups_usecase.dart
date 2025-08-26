@@ -20,6 +20,7 @@ class GetAssignmentsGroupsUsecase
       () => _assignmentRepository.getAssignmentGroups(
         params.assemblyId,
         params.assignmentId,
+        params.cycleId,
       ),
       (object, stackTrace) => GetAssignmentGroupsNetworkFailure(),
     );
@@ -29,10 +30,12 @@ class GetAssignmentsGroupsUsecase
 class GetAssignmentsGroupsParams extends Params {
   final String assignmentId;
   final String assemblyId;
+  final String cycleId;
 
   GetAssignmentsGroupsParams({
     required this.assignmentId,
     required this.assemblyId,
+    required this.cycleId,
   });
 }
 

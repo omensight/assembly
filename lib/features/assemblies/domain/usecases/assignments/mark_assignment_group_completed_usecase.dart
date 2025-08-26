@@ -1,17 +1,18 @@
 import 'package:assembly/core/error/failure.dart';
 import 'package:assembly/core/usecase/params.dart';
 import 'package:assembly/core/usecase/usecase.dart';
-import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assignment_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class MarkAssignmentGroupCompletedParams extends Params {
   final String assemblyId;
   final String assignmentId;
+  final String cycleId;
   final String assignmentGroupId;
   MarkAssignmentGroupCompletedParams({
     required this.assemblyId,
     required this.assignmentId,
+    required this.cycleId,
     required this.assignmentGroupId,
   });
 }
@@ -22,7 +23,7 @@ class MarkAssignmentGroupCompletedNetworkFailure
     extends MarkAssignmentGroupCompletedFailure {}
 
 class MarkAssignmentGroupCompletedUsecase
-    extends Usecase<AssignmentCompletion, MarkAssignmentGroupCompletedParams> {
+    extends Usecase<void, MarkAssignmentGroupCompletedParams> {
   final AssignmentRepository _assignmentRepository;
 
   MarkAssignmentGroupCompletedUsecase({
@@ -30,7 +31,7 @@ class MarkAssignmentGroupCompletedUsecase
   }) : _assignmentRepository = repository;
 
   @override
-  TaskEither<MarkAssignmentGroupCompletedFailure, AssignmentCompletion> build(
+  TaskEither<MarkAssignmentGroupCompletedFailure, void> build(
     MarkAssignmentGroupCompletedParams params,
   ) {
     return TaskEither.tryCatch(
@@ -38,6 +39,7 @@ class MarkAssignmentGroupCompletedUsecase
         assemblyId: params.assemblyId,
         assignmentId: params.assignmentId,
         assignmentGroupId: params.assignmentGroupId,
+        cycleId: params.cycleId,
       ),
       (error, stackTrace) => MarkAssignmentGroupCompletedNetworkFailure(),
     );

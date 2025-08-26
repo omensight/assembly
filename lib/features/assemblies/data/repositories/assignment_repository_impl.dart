@@ -4,7 +4,6 @@ import 'package:assembly/features/assemblies/domain/entities/assignment_settings
 import 'package:assembly/features/assemblies/domain/models/assignment_create_request.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_settings_create_request.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assignment_repository.dart';
-import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 
 abstract class AssignmentRemoteDataSource {
   Future<Assignment> createAssignment(
@@ -21,6 +20,7 @@ abstract class AssignmentRemoteDataSource {
   Future<List<AssignmentGroup>> getAssignmentGroups(
     String assemblyId,
     String assignmentId,
+    String cycleId,
   );
 
   Future<Assignment> getAssignment(String assemblyId, String assignmentId);
@@ -32,15 +32,17 @@ abstract class AssignmentRemoteDataSource {
 
   Future<List<Assignment>> getAssemblyAssignments(String assemblyId);
 
-  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+  Future<void> markAssignmentGroupAsCompleted({
     required String assemblyId,
     required String assignmentId,
     required String assignmentGroupId,
+    required String cycleId,
   });
 
-  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+  Future<void> confirmAssignmentGroupCompletion({
     required String assemblyId,
     required String assignmentId,
+    required String cycleId,
     required String assignmentGroupId,
   });
 }
@@ -78,10 +80,12 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
   Future<List<AssignmentGroup>> getAssignmentGroups(
     String assemblyId,
     String assignmentId,
+    String cycleId,
   ) {
     return _assignmentRemoteDataSource.getAssignmentGroups(
       assemblyId,
       assignmentId,
+      cycleId,
     );
   }
 
@@ -107,27 +111,31 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
   }
 
   @override
-  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+  Future<void> markAssignmentGroupAsCompleted({
     required String assemblyId,
     required String assignmentId,
     required String assignmentGroupId,
+    required String cycleId,
   }) {
     return _assignmentRemoteDataSource.markAssignmentGroupAsCompleted(
       assemblyId: assemblyId,
       assignmentId: assignmentId,
       assignmentGroupId: assignmentGroupId,
+      cycleId: cycleId,
     );
   }
 
   @override
-  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+  Future<void> confirmAssignmentGroupCompletion({
     required String assemblyId,
+    required String cycleId,
     required String assignmentId,
     required String assignmentGroupId,
   }) {
     return _assignmentRemoteDataSource.confirmAssignmentGroupCompletion(
       assemblyId: assemblyId,
       assignmentId: assignmentId,
+      cycleId: cycleId,
       assignmentGroupId: assignmentGroupId,
     );
   }

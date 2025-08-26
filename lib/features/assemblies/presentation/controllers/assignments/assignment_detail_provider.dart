@@ -1,6 +1,5 @@
 import 'package:assembly/features/assemblies/domain/entities/assembly_member.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment.dart';
-import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_settings.dart';
 import 'package:assembly/features/assemblies/domain/usecases/assignments/mark_assignment_group_completed_usecase.dart';
@@ -41,9 +40,18 @@ FutureOr<AssignmentDetailDTO> assignmentDetailDTO(
     assignmentSettingsControllerProvider(assemblyId, assignmentId).future,
   );
 
-  final assignmentGroupsAsync = await ref.watch(
-    assignmentsListControllerProvider(assemblyId, assignmentId).future,
-  );
+  final cycleId = assignmentAsync.activeAssignmentCycle?.id;
+
+  final List<AssignmentGroup> assignmentGroupsAsync =
+      cycleId != null
+          ? await ref.watch(
+            assignmentsListControllerProvider(
+              assemblyId,
+              assignmentId,
+              cycleId,
+            ).future,
+          )
+          : [];
 
   final assemblyMemberRole = ref.watch(
     currentAssemblyMemberRoleProvider(assemblyId),
@@ -61,12 +69,13 @@ FutureOr<AssignmentDetailDTO> assignmentDetailDTO(
 class MarkAssignmentGroupCompletedController
     extends _$MarkAssignmentGroupCompletedController {
   @override
-  FutureOr<AssignmentCompletion?> build({
+  FutureOr<bool> build({
     required String assemblyId,
     required String assignmentId,
     required String assignmentGroupId,
+    required String cycleId,
   }) async {
-    return null;
+    return false;
   }
 
   Future<void> markGroupAsCompleted() async {
@@ -79,12 +88,13 @@ class MarkAssignmentGroupCompletedController
                 assemblyId: assemblyId,
                 assignmentId: assignmentId,
                 assignmentGroupId: assignmentGroupId,
+                cycleId: cycleId,
               ),
             )
             .run();
     state = result.fold(
       (l) => AsyncError(l, StackTrace.current),
-      (r) => AsyncData(r),
+      (r) => AsyncData(true),
     );
   }
 }

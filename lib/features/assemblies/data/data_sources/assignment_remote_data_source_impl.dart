@@ -2,7 +2,6 @@ import 'package:assembly/features/assemblies/data/repositories/assignment_reposi
 import 'package:assembly/features/assemblies/domain/entities/assignment.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_group.dart';
 import 'package:assembly/features/assemblies/domain/entities/assignment_settings.dart';
-import 'package:assembly/features/assemblies/domain/entities/assignment_completion.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_create_request.dart';
 import 'package:assembly/features/assemblies/domain/models/assignment_settings_create_request.dart';
 import 'package:dio/dio.dart';
@@ -34,11 +33,14 @@ abstract class AssignmentRemoteDataSourceImpl
     @Body() AssignmentSettingsCreateRequest request,
   );
 
-  @GET('/assemblies/{assemblyId}/assignments/{assignmentId}/assignment_groups/')
+  @GET(
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/cycles/{cycleId}/assignment-groups/',
+  )
   @override
   Future<List<AssignmentGroup>> getAssignmentGroups(
     @Path('assemblyId') String assemblyId,
     @Path('assignmentId') String assignmentId,
+    @Path('cycleId') String cycleId,
   );
 
   @GET('/assemblies/{assemblyId}/assignments/{assignmentId}/')
@@ -64,22 +66,24 @@ abstract class AssignmentRemoteDataSourceImpl
   );
 
   @POST(
-    '/assemblies/{assemblyId}/assignments/{assignmentId}/assignment_groups/{assignmentGroupId}/mark-as-completed/',
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/cycles/{cycleId}/assignment-groups/{assignmentGroupId}/mark-as-completed/',
   )
   @override
-  Future<AssignmentCompletion> markAssignmentGroupAsCompleted({
+  Future<void> markAssignmentGroupAsCompleted({
     @Path('assemblyId') required String assemblyId,
     @Path('assignmentId') required String assignmentId,
     @Path('assignmentGroupId') required String assignmentGroupId,
+    @Path('cycleId') required String cycleId,
   });
 
   @POST(
-    '/assemblies/{assemblyId}/assignments/{assignmentId}/assignment_groups/{assignmentGroupId}/confirm-assignment-group-completion/',
+    '/assemblies/{assemblyId}/assignments/{assignmentId}/cycles/{cycleId}/assignment-groups/{assignmentGroupId}/confirm-assignment-group-completion/',
   )
   @override
-  Future<AssignmentCompletion> confirmAssignmentGroupCompletion({
+  Future<void> confirmAssignmentGroupCompletion({
     @Path('assemblyId') required String assemblyId,
     @Path('assignmentId') required String assignmentId,
     @Path('assignmentGroupId') required String assignmentGroupId,
+    @Path('cycleId') required String cycleId,
   });
 }

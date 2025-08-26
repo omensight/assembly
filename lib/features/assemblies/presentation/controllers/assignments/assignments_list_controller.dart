@@ -15,6 +15,7 @@ class AssignmentsListController extends _$AssignmentsListController {
   FutureOr<List<AssignmentGroup>> build(
     String assemblyId,
     String assignmentId,
+    String cycleId,
   ) async {
     return (await ref
             .watch(getAssignmentsGroupsUsecaseProvider)
@@ -22,6 +23,7 @@ class AssignmentsListController extends _$AssignmentsListController {
               GetAssignmentsGroupsParams(
                 assignmentId: assignmentId,
                 assemblyId: assemblyId,
+                cycleId: cycleId,
               ),
             )
             .run())

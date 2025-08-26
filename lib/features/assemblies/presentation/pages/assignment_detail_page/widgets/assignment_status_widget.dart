@@ -14,10 +14,12 @@ class AssignmentStatusWidget extends ConsumerWidget {
     super.key,
     required this.assignmentGroup,
     required this.assemblyId,
+    required this.cycleId,
   });
 
   final String assemblyId;
   final AssignmentGroup assignmentGroup;
+  final String cycleId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,26 +44,29 @@ class AssignmentStatusWidget extends ConsumerWidget {
               assemblyId: assemblyId,
               assignmentId: assignmentGroup.assignmentId,
               assignmentGroupId: assignmentGroup.id,
+              cycleId: cycleId,
             );
         final confirmState = ref.watch(confirmProvider);
 
-        ref.listen<AsyncValue<void>>(confirmProvider, (previous, next) {
+        ref.listen(confirmProvider, (previous, next) {
           // Success path: transitioned from loading to data
-          final wasLoading = previous?.isLoading == true;
-          if (wasLoading && next.hasValue && !next.isLoading) {
-            ref.invalidate(
-              assignmentDetailDTOProvider(
-                assemblyId,
-                assignmentGroup.assignmentId,
-              ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  LocaleKeys.assignmentGroupCompletionConfirmed.tr(),
+          if (next.hasValue) {
+            final isConfirmed = next.value!;
+            if (isConfirmed) {
+              ref.invalidate(
+                assignmentDetailDTOProvider(
+                  assemblyId,
+                  assignmentGroup.assignmentId,
                 ),
-              ),
-            );
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    LocaleKeys.assignmentGroupCompletionConfirmed.tr(),
+                  ),
+                ),
+              );
+            }
           }
 
           next.whenOrNull(
@@ -117,6 +122,7 @@ class AssignmentStatusWidget extends ConsumerWidget {
         assemblyId: assemblyId,
         assignmentGroupId: assignmentGroup.id,
         assignmentId: assignmentGroup.assignmentId,
+        cycleId: cycleId,
       ),
     );
 
@@ -128,6 +134,7 @@ class AssignmentStatusWidget extends ConsumerWidget {
                 assemblyId: assemblyId,
                 assignmentGroupId: assignmentGroup.id,
                 assignmentId: assignmentGroup.assignmentId,
+                cycleId: cycleId,
               ).notifier,
             )
             .markGroupAsCompleted();

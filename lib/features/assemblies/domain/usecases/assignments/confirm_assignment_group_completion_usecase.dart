@@ -7,10 +7,12 @@ import 'package:fpdart/fpdart.dart';
 class ConfirmAssignmentGroupCompletionParams extends Params {
   final String assemblyId;
   final String assignmentId;
+  final String cycleId;
   final String assignmentGroupId;
   ConfirmAssignmentGroupCompletionParams({
     required this.assemblyId,
     required this.assignmentId,
+    required this.cycleId,
     required this.assignmentGroupId,
   });
 }
@@ -37,6 +39,7 @@ class ConfirmAssignmentGroupCompletionUsecase
         assemblyId: params.assemblyId,
         assignmentId: params.assignmentId,
         assignmentGroupId: params.assignmentGroupId,
+        cycleId: params.cycleId,
       );
     }, (error, stackTrace) => ConfirmAssignmentGroupCompletionNetworkFailure());
   }

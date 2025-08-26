@@ -1,23 +1,19 @@
+import 'package:assembly/features/assemblies/domain/entities/assignment_cycle.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'assignment.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Assignment {
   final String id;
   final String name;
   final String description;
-  @JsonKey(name: 'assembly_id')
   final String assemblyId;
-  @JsonKey(name: 'member_issuer_id')
   final String memberIssuerId;
-  @JsonKey(name: 'created_at')
   final DateTime createdAt;
-  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
-  @JsonKey(name: 'active_group_id')
-  final String? activeGroupId;
+  final AssignmentCycle? activeAssignmentCycle;
 
   Assignment({
     required this.id,
@@ -27,7 +23,7 @@ class Assignment {
     required this.memberIssuerId,
     required this.createdAt,
     required this.updatedAt,
-    this.activeGroupId,
+    this.activeAssignmentCycle,
   });
 
   factory Assignment.fromJson(Map<String, dynamic> json) =>

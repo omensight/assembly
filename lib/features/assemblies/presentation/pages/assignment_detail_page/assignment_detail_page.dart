@@ -96,7 +96,8 @@ class AssignmentDetailPage extends ConsumerWidget {
                                     backgroundColor:
                                         assignmentDetailDto
                                                     .assignment
-                                                    .activeGroupId ==
+                                                    .activeAssignmentCycle
+                                                    ?.activeGroupId ==
                                                 group.id
                                             ? Theme.of(
                                               context,
@@ -112,7 +113,8 @@ class AssignmentDetailPage extends ConsumerWidget {
                                       children: [
                                         if (assignmentDetailDto
                                                 .assignment
-                                                .activeGroupId ==
+                                                .activeAssignmentCycle
+                                                ?.activeGroupId ==
                                             group.id)
                                           Text(
                                             assignmentDetailDto
@@ -177,13 +179,22 @@ class AssignmentDetailPage extends ConsumerWidget {
                                         .withValues(alpha: .55),
                                     child: Column(
                                       children: [
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: AssignmentStatusWidget(
-                                            assignmentGroup: group,
-                                            assemblyId: assemblyId,
+                                        if (assignmentDetailDto
+                                                .assignment
+                                                .activeAssignmentCycle !=
+                                            null)
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: AssignmentStatusWidget(
+                                              assignmentGroup: group,
+                                              assemblyId: assemblyId,
+                                              cycleId:
+                                                  assignmentDetailDto
+                                                      .assignment
+                                                      .activeAssignmentCycle!
+                                                      .id,
+                                            ),
                                           ),
-                                        ),
                                       ],
                                     ),
                                   ),

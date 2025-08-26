@@ -8,12 +8,13 @@ part 'confirm_assignment_group_completion_controller.g.dart';
 class ConfirmAssignmentGroupCompletionController
     extends _$ConfirmAssignmentGroupCompletionController {
   @override
-  FutureOr<void> build({
+  FutureOr<bool> build({
     required String assemblyId,
     required String assignmentId,
     required String assignmentGroupId,
+    required String cycleId,
   }) async {
-    return null;
+    return false;
   }
 
   Future<void> confirm() async {
@@ -27,13 +28,14 @@ class ConfirmAssignmentGroupCompletionController
                 assemblyId: assemblyId,
                 assignmentId: assignmentId,
                 assignmentGroupId: assignmentGroupId,
+                cycleId: cycleId,
               ),
             )
             .run();
 
     state = result.fold(
       (l) => AsyncError(l, StackTrace.current),
-      (r) => const AsyncData<void>(null),
+      (r) => AsyncData(true),
     );
   }
 }
