@@ -46,7 +46,10 @@ class AssignmentDetailPage extends ConsumerWidget {
             );
           }
           final assignmentGroups = assignmentDetailDto.assignmentGroups;
-
+          final startDate =
+              assignmentDetailDto.assignmentSettings?.startDateAndTime;
+          final hasTheAssignmentStarted =
+              startDate != null && DateTime.now().isAfter(startDate);
           return Padding(
             padding: standardHorizontalPadding,
             child:
@@ -139,10 +142,7 @@ class AssignmentDetailPage extends ConsumerWidget {
                                     ),
                                     Column(
                                       children: [
-                                        if (assignmentDetailDto
-                                                .assignment
-                                                .activeAssignmentCycle !=
-                                            null)
+                                        if (hasTheAssignmentStarted)
                                           SizedBox(
                                             width: double.infinity,
                                             child: AssignmentGroupStatusWidget(

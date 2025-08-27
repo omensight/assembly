@@ -27,10 +27,6 @@ class AssignmentGroupStatusWidget extends ConsumerWidget {
     final isMarkedAsCompleted = completion != null;
     final isConfirmed = completion?.isConfirmed ?? false;
 
-    if (!isMarkedAsCompleted) {
-      return SizedBox.shrink();
-    }
-
     if (isMarkedAsCompleted && isConfirmed) {
       return Text(
         LocaleKeys.assignmentCompleted.tr(),
