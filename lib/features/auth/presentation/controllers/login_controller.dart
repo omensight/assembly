@@ -3,7 +3,6 @@ import 'package:assembly/features/auth/domain/usecases/sigin_using_email_and_pas
 import 'package:assembly/features/auth/domain/usecases/signup_using_email_and_password_usecase.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:assembly/core/usecase/params.dart';
 import 'package:assembly/features/auth/domain/entities/server_token.dart';
 import 'package:assembly/features/auth/domain/usecases/login_into_the_server_usecase.dart';
@@ -29,8 +28,20 @@ Stream<ServerToken?> serverToken(Ref ref) {
 
 @Riverpod(keepAlive: true)
 AuthenticationState authenticationState(Ref ref) {
-  final user = ref.watch(authStateChangesProvider).valueOrNull;
-  final serverToken = ref.watch(serverTokenProvider).valueOrNull;
+  final user = ref
+      .watch(authStateChangesProvider)
+      .when(
+        data: (data) => data,
+        error: (error, stackTrace) => null,
+        loading: () => null,
+      );
+  final serverToken = ref
+      .watch(serverTokenProvider)
+      .when(
+        data: (data) => data,
+        error: (error, stackTrace) => null,
+        loading: () => null,
+      );
   AuthenticationState state = AuthenticationState.loading;
   if (serverToken == null && user != null) {
     ref.read(loginControllerProvider.notifier).refreshTokenServer();
@@ -46,7 +57,7 @@ AuthenticationState authenticationState(Ref ref) {
   return state;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LoginController extends _$LoginController {
   @override
   FutureOr<User?> build() {
@@ -70,8 +81,10 @@ class LoginController extends _$LoginController {
   }
 
   Future<void> refreshTokenServer() async {
-    final firebaseToken =
-        await ref.read(authStateChangesProvider).valueOrNull?.getIdToken();
+    final firebaseToken = await ref
+        .read(authStateChangesProvider)
+        .requireValue
+        ?.getIdToken();
     if (firebaseToken != null) {
       (await ref
               .read(loginIntoTheServerUsecaseProvider)

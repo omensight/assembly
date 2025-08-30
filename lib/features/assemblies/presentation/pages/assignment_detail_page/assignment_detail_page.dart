@@ -200,6 +200,9 @@ class AssignmentDetailPage extends ConsumerWidget {
                                                             .assignment
                                                             .activeAssignmentCycle!
                                                             .id,
+                                                    currentAssemblyMember:
+                                                        assignmentDetailDto
+                                                            .currentAssemblyMember,
                                                   ),
                                                 ),
                                             ],

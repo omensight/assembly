@@ -17,7 +17,7 @@ part 'routes.g.dart';
 final assemblyRoutes = $appRoutes;
 
 @TypedGoRoute<UserAssembliesRoute>(path: '/assemblies')
-class UserAssembliesRoute extends GoRouteData {
+class UserAssembliesRoute extends GoRouteData with _$UserAssembliesRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return UserAssembliesPage();
@@ -25,7 +25,7 @@ class UserAssembliesRoute extends GoRouteData {
 }
 
 @TypedGoRoute<CreateAssemblyRoute>(path: '/create-assembly')
-class CreateAssemblyRoute extends GoRouteData {
+class CreateAssemblyRoute extends GoRouteData with _$CreateAssemblyRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return CreateAssemblyPage();
@@ -33,7 +33,7 @@ class CreateAssemblyRoute extends GoRouteData {
 }
 
 @TypedGoRoute<AssemblyDetailRoute>(path: '/assembly')
-class AssemblyDetailRoute extends GoRouteData {
+class AssemblyDetailRoute extends GoRouteData with _$AssemblyDetailRoute {
   final String assemblyId;
 
   AssemblyDetailRoute({required this.assemblyId});
@@ -46,7 +46,8 @@ class AssemblyDetailRoute extends GoRouteData {
 @TypedGoRoute<AssemblyJoiningInformationRoute>(
   path: '/assembly-joining-information',
 )
-class AssemblyJoiningInformationRoute extends GoRouteData {
+class AssemblyJoiningInformationRoute extends GoRouteData
+    with _$AssemblyJoiningInformationRoute {
   final String assemblyId;
 
   AssemblyJoiningInformationRoute({required this.assemblyId});
@@ -57,7 +58,8 @@ class AssemblyJoiningInformationRoute extends GoRouteData {
 }
 
 @TypedGoRoute<ScanAssemblyJoinCodeRoute>(path: '/scan-assembly-join-code')
-class ScanAssemblyJoinCodeRoute extends GoRouteData {
+class ScanAssemblyJoinCodeRoute extends GoRouteData
+    with _$ScanAssemblyJoinCodeRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return ScanAssemblyJoinCodePage();
@@ -65,7 +67,7 @@ class ScanAssemblyJoinCodeRoute extends GoRouteData {
 }
 
 @TypedGoRoute<JoinRequestsListRoute>(path: '/assembly-join-requests')
-class JoinRequestsListRoute extends GoRouteData {
+class JoinRequestsListRoute extends GoRouteData with _$JoinRequestsListRoute {
   final String assemblyId;
 
   JoinRequestsListRoute({required this.assemblyId});
@@ -77,7 +79,7 @@ class JoinRequestsListRoute extends GoRouteData {
 }
 
 @TypedGoRoute<AssemblyMembersRoute>(path: '/assembly-members')
-class AssemblyMembersRoute extends GoRouteData {
+class AssemblyMembersRoute extends GoRouteData with _$AssemblyMembersRoute {
   final String assemblyId;
 
   AssemblyMembersRoute({required this.assemblyId});
@@ -89,7 +91,7 @@ class AssemblyMembersRoute extends GoRouteData {
 }
 
 @TypedGoRoute<EditAssemblyRoute>(path: '/edit-assembly')
-class EditAssemblyRoute extends GoRouteData {
+class EditAssemblyRoute extends GoRouteData with _$EditAssemblyRoute {
   final String assemblyId;
 
   EditAssemblyRoute({required this.assemblyId});
@@ -101,7 +103,7 @@ class EditAssemblyRoute extends GoRouteData {
 }
 
 @TypedGoRoute<CreateAssignmentRoute>(path: '/create-assignment')
-class CreateAssignmentRoute extends GoRouteData {
+class CreateAssignmentRoute extends GoRouteData with _$CreateAssignmentRoute {
   final String assemblyId;
 
   CreateAssignmentRoute({required this.assemblyId});
@@ -115,7 +117,8 @@ class CreateAssignmentRoute extends GoRouteData {
 @TypedGoRoute<CreateAssignmentSettingsRoute>(
   path: '/create-assignment-settings',
 )
-class CreateAssignmentSettingsRoute extends GoRouteData {
+class CreateAssignmentSettingsRoute extends GoRouteData
+    with _$CreateAssignmentSettingsRoute {
   final String assemblyId;
   final String assignmentId;
 
@@ -134,7 +137,7 @@ class CreateAssignmentSettingsRoute extends GoRouteData {
 }
 
 @TypedGoRoute<AssignmentDetailRoute>(path: '/assignment-detail')
-class AssignmentDetailRoute extends GoRouteData {
+class AssignmentDetailRoute extends GoRouteData with _$AssignmentDetailRoute {
   final String assemblyId;
   final String assignmentId;
 

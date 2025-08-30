@@ -17,11 +17,10 @@ class LoginPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(loginControllerProvider, (previous, next) {
-      switch (next) {
-        case AsyncError(:final error):
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error as String)));
+      if (next is AsyncError) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next as String)));
       }
     });
     final loginTextValidator = useMemoized(() => LoginTextValidator());
@@ -66,16 +65,16 @@ class LoginPage extends HookConsumerWidget {
                 StandardTextFormField(
                   controller: emailController,
                   label: LocaleKeys.email.tr(),
-                  validator:
-                      (value) => loginTextValidator.emailValidator(value),
+                  validator: (value) =>
+                      loginTextValidator.emailValidator(value),
                   onChanged: (value) {},
                 ),
                 const StandardSpace.vertical(),
                 StandardFormFieldPassword(
                   controller: passwordController,
                   label: LocaleKeys.password.tr(),
-                  validator:
-                      (value) => loginTextValidator.passwordValidator(value),
+                  validator: (value) =>
+                      loginTextValidator.passwordValidator(value),
                   onChanged: (value) {},
                 ),
                 const StandardSpace.vertical(),
@@ -84,29 +83,27 @@ class LoginPage extends HookConsumerWidget {
                   child: StandardButton(
                     text: LocaleKeys.signIn.tr(),
                     isBackgroundColored: true,
-                    onPressed:
-                        loginWithEmailInProgress.value
-                            ? null
-                            : () async {
-                              loginWithEmailInProgress.value = true;
-                              final isValid =
-                                  formKey.currentState?.validate() ?? false;
-                              if (isValid) {
-                                await ref
-                                    .read(loginControllerProvider.notifier)
-                                    .registerUsingEmailAndPassword(
-                                      emailAddress: emailController.text,
-                                      password: passwordController.text,
-                                    );
-                              }
-                              try {
-                                loginWithEmailInProgress.value = false;
-                              } catch (_) {}
-                            },
-                    buttonState:
-                        loginWithEmailInProgress.value
-                            ? StandardButtonState.loading
-                            : StandardButtonState.standBy,
+                    onPressed: loginWithEmailInProgress.value
+                        ? null
+                        : () async {
+                            loginWithEmailInProgress.value = true;
+                            final isValid =
+                                formKey.currentState?.validate() ?? false;
+                            if (isValid) {
+                              await ref
+                                  .read(loginControllerProvider.notifier)
+                                  .registerUsingEmailAndPassword(
+                                    emailAddress: emailController.text,
+                                    password: passwordController.text,
+                                  );
+                            }
+                            try {
+                              loginWithEmailInProgress.value = false;
+                            } catch (_) {}
+                          },
+                    buttonState: loginWithEmailInProgress.value
+                        ? StandardButtonState.loading
+                        : StandardButtonState.standBy,
                   ),
                 ),
               ],
@@ -125,25 +122,24 @@ class SignInWithGoogleButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signInWithGoogleInProgress = useState(false);
     return ElevatedButton.icon(
-      onPressed:
-          signInWithGoogleInProgress.value
-              ? null
-              : () async {
-                signInWithGoogleInProgress.value = true;
-                await ref
-                    .read(loginControllerProvider.notifier)
-                    .loginWithGoogle();
-                signInWithGoogleInProgress.value = true;
-              },
+      onPressed: signInWithGoogleInProgress.value
+          ? null
+          : () async {
+              signInWithGoogleInProgress.value = true;
+              await ref
+                  .read(loginControllerProvider.notifier)
+                  .loginWithGoogle();
+              signInWithGoogleInProgress.value = true;
+            },
       label: Row(
         spacing: 8,
         children: [
           signInWithGoogleInProgress.value
               ? SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(),
-              )
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(),
+                )
               : Image.asset('assets/icons/google_logo.png', width: 24),
           Text(LocaleKeys.signInGoogle.tr()),
         ],

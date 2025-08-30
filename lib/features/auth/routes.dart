@@ -6,7 +6,7 @@ part 'routes.g.dart';
 final authRoutes = $appRoutes;
 
 @TypedGoRoute<LoginRoute>(path: '/login')
-class LoginRoute extends GoRouteData {
+class LoginRoute extends GoRouteData with _$LoginRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LoginPage();

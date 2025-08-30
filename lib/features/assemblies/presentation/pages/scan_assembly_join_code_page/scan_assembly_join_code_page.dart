@@ -22,7 +22,7 @@ class ScanAssemblyJoinCodePage extends HookConsumerWidget {
     final assemblyJoinCode = useState<String?>(null);
 
     ref.listen(joinAssemblyControllerProvider, (previous, next) async {
-      final assembly = next.valueOrNull;
+      final assembly = next.value;
       final joinCode = assemblyJoinCode.value;
       if (assembly != null && previous?.value == null && joinCode != null) {
         final state = await showModalBottomSheet(

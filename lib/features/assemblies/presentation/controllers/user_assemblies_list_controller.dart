@@ -4,7 +4,6 @@ import 'package:assembly/features/assemblies/domain/usecases/get_assemblies_list
 import 'package:assembly/features/assemblies/presentation/providers/usecase_providers.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'user_assemblies_list_controller.g.dart';
 

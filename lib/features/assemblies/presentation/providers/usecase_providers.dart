@@ -19,7 +19,6 @@ import 'package:assembly/features/assemblies/domain/usecases/get_current_assembl
 import 'package:assembly/features/assemblies/domain/usecases/reject_join_request_usecase.dart';
 import 'package:assembly/features/assemblies/domain/usecases/update_assembly_usecase.dart';
 import 'package:assembly/features/assemblies/presentation/providers/repository_providers.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:assembly/features/assemblies/domain/usecases/assignments/confirm_assignment_group_completion_usecase.dart';
 part 'usecase_providers.g.dart';
@@ -174,9 +173,11 @@ MarkAssignmentGroupCompletedUsecase markAssignmentGroupCompletedUsecase(
   );
 }
 
-final confirmAssignmentGroupCompletionUsecaseProvider =
-    Provider<ConfirmAssignmentGroupCompletionUsecase>((ref) {
-      return ConfirmAssignmentGroupCompletionUsecase(
-        repository: ref.watch(assignmentRepositoryProvider),
-      );
-    });
+@riverpod
+ConfirmAssignmentGroupCompletionUsecase confirmAssignmentGroupCompletionUsecase(
+  Ref ref,
+) {
+  return ConfirmAssignmentGroupCompletionUsecase(
+    repository: ref.watch(assignmentRepositoryProvider),
+  );
+}

@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:assembly/core/app_environment.dart';
 import 'package:assembly/features/auth/presentation/controllers/login_controller.dart';
 import 'package:assembly/generated/locale_keys.g.dart';
@@ -16,11 +15,10 @@ part 'client_providers.g.dart';
 Dio authenticationDio(Ref ref) {
   final dio = Dio();
   if (AppEnvironment.debugModeEnabled && !kIsWeb) {
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient =
-        () =>
-            HttpClient()
-              ..badCertificateCallback =
-                  (X509Certificate cert, String host, int port) => true;
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () =>
+        HttpClient()
+          ..badCertificateCallback =
+              (X509Certificate cert, String host, int port) => true;
   }
   return dio;
 }
@@ -75,11 +73,10 @@ Dio mainDio(Ref ref) {
     BaseOptions(headers: {'Authorization': 'Token ${serverToken?.token}'}),
   );
   if (AppEnvironment.debugModeEnabled && !kIsWeb) {
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient =
-        () =>
-            HttpClient()
-              ..badCertificateCallback =
-                  (X509Certificate cert, String host, int port) => true;
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () =>
+        HttpClient()
+          ..badCertificateCallback =
+              (X509Certificate cert, String host, int port) => true;
   }
 
   return dio;

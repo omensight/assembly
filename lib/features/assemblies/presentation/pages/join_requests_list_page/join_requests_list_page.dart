@@ -29,65 +29,60 @@ class JoinRequestsListPage extends ConsumerWidget {
       body: Padding(
         padding: standardHorizontalPadding,
         child: joinRequestsAsync.when(
-          data:
-              (joinRequests) =>
-                  joinRequests.isEmpty
-                      ? Center(
-                        child: StandardEmptyView(
-                          imagePath:
-                              'assets/empty_views/im_ev_no_assembly_join_requests.webp',
-                          message: LocaleKeys.noJoinRequestsFound.tr(),
-                        ),
-                      )
-                      : ListView.separated(
-                        separatorBuilder:
-                            (context, index) => const StandardSpace.vertical(),
-                        itemCount: joinRequests.length,
-                        itemBuilder: (context, index) {
-                          final joinRequest = joinRequests[index];
-                          return StandardContainer(
-                            forceBorderDrawing: true,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      joinRequest.user.fullName,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(joinRequest.user.username),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  spacing: kStandardSpacing,
-                                  children: [
-                                    RejectJoinRequestButton(
-                                      assemblyId: assemblyId,
-                                      joinRequest: joinRequest,
-                                    ),
-                                    AcceptsJoinRequestButton(
-                                      assemblyId: assemblyId,
-                                      joinRequest: joinRequest,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+          data: (joinRequests) => joinRequests.isEmpty
+              ? Center(
+                  child: StandardEmptyView(
+                    imagePath:
+                        'assets/empty_views/im_ev_no_assembly_join_requests.webp',
+                    message: LocaleKeys.noJoinRequestsFound.tr(),
+                  ),
+                )
+              : ListView.separated(
+                  separatorBuilder: (context, index) =>
+                      const StandardSpace.vertical(),
+                  itemCount: joinRequests.length,
+                  itemBuilder: (context, index) {
+                    final joinRequest = joinRequests[index];
+                    return StandardContainer(
+                      forceBorderDrawing: true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                joinRequest.user.fullName,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(joinRequest.user.username),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            spacing: kStandardSpacing,
+                            children: [
+                              RejectJoinRequestButton(
+                                assemblyId: assemblyId,
+                                joinRequest: joinRequest,
+                              ),
+                              AcceptsJoinRequestButton(
+                                assemblyId: assemblyId,
+                                joinRequest: joinRequest,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error:
-              (error, stackTrace) => Center(
-                child: Text(
-                  '${LocaleKeys.failureLoadingJoinRequests.tr()}: $error',
+                    );
+                  },
                 ),
-              ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) => Center(
+            child: Text(
+              '${LocaleKeys.failureLoadingJoinRequests.tr()}: $error',
+            ),
+          ),
         ),
       ),
     );
@@ -112,19 +107,19 @@ class AcceptsJoinRequestButton extends ConsumerWidget {
     return acceptanceAsyncState.isLoading
         ? const CircularProgressIndicator()
         : StandardIconButton(
-          isFilled: true,
-          icon: Icon(Icons.check),
-          onPressed: () {
-            ref
-                .read(
-                  AcceptJoinRequestControllerProvider(
-                    assemblyId,
-                    joinRequest.id,
-                  ).notifier,
-                )
-                .acceptRequest();
-          },
-        );
+            isFilled: true,
+            icon: Icon(Icons.check),
+            onPressed: () {
+              ref
+                  .read(
+                    acceptJoinRequestControllerProvider(
+                      assemblyId,
+                      joinRequest.id,
+                    ).notifier,
+                  )
+                  .acceptRequest();
+            },
+          );
   }
 }
 
@@ -147,31 +142,31 @@ class RejectJoinRequestButton extends ConsumerWidget {
     return rejectionAsyncState.isLoading
         ? const CircularProgressIndicator()
         : StandardIconButton(
-          isFilled: true,
-          icon: Icon(Icons.close),
-          isError: true,
-          onPressed: () {
-            ref
-                .read(
-                  RejectJoinRequestControllerProvider(
-                    assemblyId,
-                    joinRequest.id,
-                  ).notifier,
-                )
-                .rejectRequest()
-                .then((_) {
-                  if (rejectionAsyncState.hasValue &&
-                      rejectionAsyncState.value == true) {
-                    ref
-                        .read(
-                          assemblyJoinRequestsListControllerProvider(
-                            assemblyId,
-                          ).notifier,
-                        )
-                        .removeRequestById(joinRequest.id);
-                  }
-                });
-          },
-        );
+            isFilled: true,
+            icon: Icon(Icons.close),
+            isError: true,
+            onPressed: () {
+              ref
+                  .read(
+                    rejectJoinRequestControllerProvider(
+                      assemblyId,
+                      joinRequest.id,
+                    ).notifier,
+                  )
+                  .rejectRequest()
+                  .then((_) {
+                    if (rejectionAsyncState.hasValue &&
+                        rejectionAsyncState.value == true) {
+                      ref
+                          .read(
+                            assemblyJoinRequestsListControllerProvider(
+                              assemblyId,
+                            ).notifier,
+                          )
+                          .removeRequestById(joinRequest.id);
+                    }
+                  });
+            },
+          );
   }
 }

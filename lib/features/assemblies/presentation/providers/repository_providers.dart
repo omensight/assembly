@@ -6,7 +6,6 @@ import 'package:assembly/features/assemblies/domain/repositories/assignment_repo
 import 'package:assembly/features/assemblies/domain/repositories/assembly_join_request_repository.dart';
 import 'package:assembly/features/assemblies/domain/repositories/assembly_repository.dart';
 import 'package:assembly/features/assemblies/presentation/providers/data_source_providers.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'repository_providers.g.dart';

@@ -34,13 +34,18 @@ class ConfirmAssignmentGroupCompletionUsecase
   TaskEither<ConfirmAssignmentGroupCompletionFailure, void> build(
     ConfirmAssignmentGroupCompletionParams params,
   ) {
-    return TaskEither.tryCatch(() async {
-      await _assignmentRepository.confirmAssignmentGroupCompletion(
-        assemblyId: params.assemblyId,
-        assignmentId: params.assignmentId,
-        assignmentGroupId: params.assignmentGroupId,
-        cycleId: params.cycleId,
-      );
-    }, (error, stackTrace) => ConfirmAssignmentGroupCompletionNetworkFailure());
+    return TaskEither.tryCatch(
+      () async {
+        await _assignmentRepository.confirmAssignmentGroupCompletion(
+          assemblyId: params.assemblyId,
+          assignmentId: params.assignmentId,
+          assignmentGroupId: params.assignmentGroupId,
+          cycleId: params.cycleId,
+        );
+      },
+      (error, stackTrace) {
+        return ConfirmAssignmentGroupCompletionNetworkFailure();
+      },
+    );
   }
 }

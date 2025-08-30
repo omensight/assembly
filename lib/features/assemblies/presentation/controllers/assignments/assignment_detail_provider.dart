@@ -8,7 +8,6 @@ import 'package:assembly/features/assemblies/presentation/controllers/assignment
 import 'package:assembly/features/assemblies/presentation/controllers/assignments/assignments_list_controller.dart';
 import 'package:assembly/features/assemblies/presentation/controllers/current_assembly_member_controller.dart';
 import 'package:assembly/features/assemblies/presentation/providers/usecase_providers.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assignment_detail_provider.g.dart';
@@ -18,11 +17,13 @@ class AssignmentDetailDTO {
   final AssignmentSettings? assignmentSettings;
   final List<AssignmentGroup> assignmentGroups;
   final AssemblyMemberRole assemblyMemberRole;
+  final AssemblyMember currentAssemblyMember;
   AssignmentDetailDTO({
     required this.assignment,
     required this.assignmentSettings,
     required this.assignmentGroups,
     required this.assemblyMemberRole,
+    required this.currentAssemblyMember,
   });
 }
 
@@ -42,16 +43,18 @@ FutureOr<AssignmentDetailDTO> assignmentDetailDTO(
 
   final cycleId = assignmentAsync.activeAssignmentCycle?.id;
 
-  final List<AssignmentGroup> assignmentGroupsAsync =
-      cycleId != null
-          ? await ref.watch(
-            assignmentsListControllerProvider(
-              assemblyId,
-              assignmentId,
-              cycleId,
-            ).future,
-          )
-          : [];
+  final List<AssignmentGroup> assignmentGroupsAsync = cycleId != null
+      ? await ref.watch(
+          assignmentsListControllerProvider(
+            assemblyId,
+            assignmentId,
+            cycleId,
+          ).future,
+        )
+      : [];
+  final currentAssemblyMember = await ref.watch(
+    currentAssemblyMemberProvider(assemblyId).future,
+  );
 
   final assemblyMemberRole = ref.watch(
     currentAssemblyMemberRoleProvider(assemblyId),
@@ -62,6 +65,7 @@ FutureOr<AssignmentDetailDTO> assignmentDetailDTO(
     assignmentSettings: assignmentSettingsAsync,
     assignmentGroups: assignmentGroupsAsync,
     assemblyMemberRole: assemblyMemberRole,
+    currentAssemblyMember: currentAssemblyMember,
   );
 }
 
@@ -80,18 +84,17 @@ class MarkAssignmentGroupCompletedController
 
   Future<void> markGroupAsCompleted() async {
     state = const AsyncLoading();
-    final result =
-        await ref
-            .read(markAssignmentGroupCompletedUsecaseProvider)
-            .build(
-              MarkAssignmentGroupCompletedParams(
-                assemblyId: assemblyId,
-                assignmentId: assignmentId,
-                assignmentGroupId: assignmentGroupId,
-                cycleId: cycleId,
-              ),
-            )
-            .run();
+    final result = await ref
+        .read(markAssignmentGroupCompletedUsecaseProvider)
+        .build(
+          MarkAssignmentGroupCompletedParams(
+            assemblyId: assemblyId,
+            assignmentId: assignmentId,
+            assignmentGroupId: assignmentGroupId,
+            cycleId: cycleId,
+          ),
+        )
+        .run();
     state = result.fold(
       (l) => AsyncError(l, StackTrace.current),
       (r) => AsyncData(true),

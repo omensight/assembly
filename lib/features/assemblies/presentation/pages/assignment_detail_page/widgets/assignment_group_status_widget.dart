@@ -15,17 +15,24 @@ class AssignmentGroupStatusWidget extends ConsumerWidget {
     required this.assignmentGroup,
     required this.assemblyId,
     required this.cycleId,
+    required this.currentAssemblyMember,
   });
 
   final String assemblyId;
   final AssignmentGroup assignmentGroup;
   final String cycleId;
+  final AssemblyMember currentAssemblyMember;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final completion = assignmentGroup.completion;
     final isMarkedAsCompleted = completion != null;
     final isConfirmed = completion?.isConfirmed ?? false;
+    final isCurrentUserAssignee =
+        assignmentGroup.assignees
+            .map((e) => e.assemblyMember)
+            .where((element) => element.id == currentAssemblyMember.id)
+            .isNotEmpty;
 
     if (isMarkedAsCompleted && isConfirmed) {
       return Text(
@@ -36,7 +43,7 @@ class AssignmentGroupStatusWidget extends ConsumerWidget {
       );
     }
 
-    if (isMarkedAsCompleted && !isConfirmed) {
+    if (isMarkedAsCompleted && !isConfirmed && isCurrentUserAssignee) {
       final role = ref.watch(currentAssemblyMemberRoleProvider(assemblyId));
       if (role == AssemblyMemberRole.admin) {
         final confirmProvider =
@@ -109,12 +116,17 @@ class AssignmentGroupStatusWidget extends ConsumerWidget {
           ],
         );
       }
+
       return Text(
         LocaleKeys.awaitingConfirmation.tr(),
         style: Theme.of(
           context,
         ).textTheme.bodyMedium?.copyWith(color: Colors.deepOrange),
       );
+    }
+
+    if (!isCurrentUserAssignee) {
+      return SizedBox.shrink();
     }
 
     final markAsCompletionStatus = ref.watch(
